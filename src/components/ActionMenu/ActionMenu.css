@@ -1,0 +1,36 @@
+.actionBox {
+    border-radius: 8px;
+    border: 8px solid #7073A0;
+}
+
+button {
+    border: none;
+    font-size: 40px;
+    background-color: inherit;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.5s;
+    transition: 0.5s;
+}
+
+button:focus {
+    outline: 0;
+}
+
+button:after {
+  content: ' \25b6';
+  position: absolute;
+  opacity: 0;  
+  top: 0;
+  left: -15px;
+  transition: 0.5s;
+}
+
+button:hover{
+  padding-left: 25px;
+}
+
+button:hover:after {
+  opacity: 1;
+  left: -10px;
+}

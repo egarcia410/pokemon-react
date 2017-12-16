@@ -1,0 +1,10 @@
+.battleArena {
+    background-image: url('http://orig00.deviantart.net/6661/f/2014/325/d/d/or_as_battle_background_1_by_phoenixoflight92-d83m36e.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 3px;
+}
+
+.row {
+    margin: 0;
+}

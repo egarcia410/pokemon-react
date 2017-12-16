@@ -1,0 +1,37 @@
+.statusBar {
+    border-radius: 8px;
+    border: 8px solid #455C49;
+    background-color: #F8F7D9;
+    height: 200px;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.name {
+    margin: 0;
+}
+
+.level {
+    margin: 0;
+}
+
+.topStatusBar {
+    margin-top: -10px;
+    margin-bottom: -20px;
+}
+
+.bottomStatusBar {
+    margin-top: -15px;
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid blue
+}
+
+.healthBar {
+    height: 30px;
+    width: 60%;
+    border-radius: 5px;
+    background-color: green;
+    padding: 5px;
+}

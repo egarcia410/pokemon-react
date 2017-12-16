@@ -1,0 +1,9 @@
+.promptBox {
+    border-radius: 8px;
+    border: 8px solid #C7A750;
+    background-color: #2A5067;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
