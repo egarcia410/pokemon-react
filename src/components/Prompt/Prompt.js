@@ -1,7 +1,11 @@
 import React from 'react';
 import './Prompt.css';
+import _ from 'lodash';
 
 const prompt = (props) => {
+
+    let attack = _.sample(props.opponent.abilities);
+
     if (props.active) {
         return (
             <div className="col-12 col-md-8 promptBox">
@@ -11,9 +15,8 @@ const prompt = (props) => {
     }
     return (
         <div className="col-12 col-md-8 promptBox">
-            {props.opponent.name.toUpperCase()}
-            {/* <h1>{props.data.name.toUpperCase()} used {props.attack.toUpperCase()}</h1> */}
-        </div>      
+            <h1>{props.opponent.name.toUpperCase()} used {attack.toUpperCase()}!</h1>
+        </div>
     )
 }
 

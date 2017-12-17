@@ -27,6 +27,8 @@ class Battle extends Component {
             fullHealth: 100,
             currentHealth: 100,
             attack: 52,
+            abilities: ['ember', 'scratch'],
+            currentAbility: '',
             catchRate: 5.9,
             level: 1,
             // image: '../../images/4.png'      
@@ -50,18 +52,35 @@ class Battle extends Component {
     reduceHealth = (user, opp) => {
         let health = opp.currentHealth;
         let reducedHealth = health - user.attack;
-        let opponent = { ...opp };
-        opponent.currentHealth = reducedHealth;
-        this.setState({ opponent })
+        // User attacks on their turn
+        if (this.state.activeTurn) {
+            let opponent = { ...opp };
+            opponent.currentHealth = reducedHealth;
+            this.setState({ opponent })
+        // Opponent attacks on their turn
+        } else {
+            let user = { ...opp };
+            user.currentHealth = reducedHealth;
+            this.setState({ user }) 
+        }
     }
 
     performAction = (event) => {
         event.preventDefault();
         switch (event.target.name) {
             case 'fight':
+                // User attacks Opponent
                 this.reduceHealth(this.state.user, this.state.opponent);
-                this.setState({activeTurn: false});
-                // this.opponentAttack();
+                setTimeout(() => {
+                    // Completes user's turn
+                    this.setState({activeTurn: false});
+                    // Opponent attacks User
+                    this.reduceHealth(this.state.opponent, this.state.user);
+                }, 1000);
+                setTimeout(() => {
+                    // Completes Opponent's turn
+                    this.setState({ activeTurn: true });
+                }, 4000)
                 break;
             case 'bag':
                 break;
@@ -101,8 +120,7 @@ class Battle extends Component {
                             opponent={this.state.opponent}
                             active={this.state.activeTurn}/>
                     <ActionMenu action={this.performAction} 
-                                active={this.state.activeTurn} 
-                                attack={this.randomAttack}/>
+                                active={this.state.activeTurn}/>
                 </div>
             </div>
         )
