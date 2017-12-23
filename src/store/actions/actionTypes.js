@@ -1,1 +1,0 @@
-export const REDUCE_HEALTH = 'REDUCE_HEALTH';

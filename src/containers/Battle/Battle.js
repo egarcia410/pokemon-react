@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import StatusMenu from '../../components/StatusMenu/StatusMenu';
+import StatusMenu from '../../containers/StatusMenu/StatusMenu';
 import Pokemon from '../../containers/Pokemon/Pokemon';
 import Prompt from '../../containers/Prompt/Prompt';
 import ActionMenu from '../../components/ActionMenu/ActionMenu';

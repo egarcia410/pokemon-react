@@ -6,12 +6,12 @@ import _ from 'lodash';
 
 class Prompt extends Component {
 
-    attack = (abilities) => {
+    attack = () => {
+        console.log('attack function')
         return _.sample(this.props.opp.abilities).toUpperCase();
     }
 
     render() {
-
         if (this.props.active) {
             return (
                 <div className="col-12 col-md-8 promptBox">
@@ -21,7 +21,7 @@ class Prompt extends Component {
         } else {
             return (
                 <div className="col-12 col-md-8 promptBox">
-                    <h1>{this.props.opp.name.toUpperCase()} used {this.attack}!</h1>
+                    <h1>{this.props.opp.name.toUpperCase()} used {this.attack()}!</h1>
                 </div>
             )
         }

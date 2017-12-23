@@ -1,3 +1,5 @@
+import * as actionTypes from './actions/actions';
+
 const initialState = {
     user: {
         id: 1,
@@ -27,7 +29,29 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
-    return state;
+    switch(action.type) {
+        case actionTypes.REDUCE_HEALTH:
+            let health1 = action.user.currentHealth;
+            let health2 = action.opp.currentHealth;
+        
+            let reducedHealth1 = health1 - action.opp.attack;
+            let reducedHealth2 = health2 - action.user.attack;
+        
+            let opponent = { ...action.opp };
+            opponent.currentHealth = reducedHealth1;
+            let user = { ...action.user };
+            user.currentHealth = reducedHealth2;
+
+            return {
+                user: user,
+                opponent: opponent,
+                activeTurn: false
+            };
+        
+        default:
+            return state;
+
+    }
 }
 
 export default reducer;

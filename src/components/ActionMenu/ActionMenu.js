@@ -1,33 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as actionCreators from '../../store/actions/actions';
 
 import './ActionMenu.css';
 
 class ActionMenu extends Component {
-
-    reduceHealth = (usr, opp) => {
-        let health1 = usr.currentHealth;
-        let health2 = opp.currentHealth;
-
-        let reducedHealth1 = health1 - opp.attack;
-        let reducedHealth2 = health2 - usr.attack;
-
-        let opponent = { ...opp };
-        opponent.currentHealth = reducedHealth1;
-        this.setState({ opponent })
-        this.setState({
-            activeTurn: false
-        });
-
-        setTimeout(() => {
-            let user = { ...usr };
-            user.currentHealth = reducedHealth2;
-            this.setState({ user })
-            this.setState({
-                activeTurn: true
-            });
-        }, 2000);
-    }
 
     performAction = (event) => {
         event.preventDefault();
@@ -52,15 +29,15 @@ class ActionMenu extends Component {
                 <div className="row">
                     <div className="col-6">
                         {this.props.active 
-                        ? <button name="fight" onClick={(e) => this.performAction(e)}>FIGHT</button>
-                        : <button disbaled name="fight" onClick={(e) => this.performAction(e)}>FIGHT</button>
+                            ? <button name="fight" onClick={() => this.props.reduceHealth(this.props.user, this.props.opp)}>FIGHT</button>
+                            : <button disabled name="fight">FIGHT</button>
                         }
                     </div>
                     <div className="col-1"></div>
                     <div className="col-5">
                         {this.props.active
                             ? <button name="fight" onClick={(e) => this.performAction(e)}>BAG</button>
-                            : <button disbaled name="fight" onClick={(e) => this.performAction(e)}>BAG</button>
+                            : <button disabled name="fight">BAG</button>
                         }
                     </div>
                 </div>
@@ -68,14 +45,14 @@ class ActionMenu extends Component {
                     <div className="col-6">
                         {this.props.active
                             ? <button name="fight" onClick={(e) => this.performAction(e)}>POKeMON</button>
-                            : <button disbaled name="fight" onClick={(e) => this.performAction(e)}>POKeMON</button>
+                            : <button disabled name="fight">POKeMON</button>
                         }
                     </div>
                     <div className="col-1"></div>
                     <div className="col-5">
                         {this.props.active
                             ? <button name="fight" onClick={(e) => this.performAction(e)}>BAG</button>
-                            : <button disbaled name="fight" onClick={(e) => this.performAction(e)}>BAG</button>
+                            : <button disabled name="fight">BAG</button>
                         }
                     </div>
                 </div>
@@ -86,14 +63,17 @@ class ActionMenu extends Component {
 
 const mapStateToProps = state => {
     return {
+        user: state.user,
+        opp: state.opponent,
         active: state.activeTurn
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        reduceHealth: () => dispatch({type: 'REDUCE_HEALTH'})
-    }
-}
+        reduceHealth: (user, opp) => dispatch(actionCreators.reduceHealth(user, opp))
+    }                                    
+};
 
-export default connect(mapStateToProps)(ActionMenu);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActionMenu);
