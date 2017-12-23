@@ -7,7 +7,6 @@ import _ from 'lodash';
 class Prompt extends Component {
 
     attack = () => {
-        console.log('attack function')
         return _.sample(this.props.opp.abilities).toUpperCase();
     }
 

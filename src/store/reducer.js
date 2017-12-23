@@ -30,27 +30,28 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
-        case actionTypes.REDUCE_HEALTH:
-            let health1 = action.user.currentHealth;
-            let health2 = action.opp.currentHealth;
-        
-            let reducedHealth1 = health1 - action.opp.attack;
-            let reducedHealth2 = health2 - action.user.attack;
-        
+        case actionTypes.REDUCE_OPP_HEALTH:
+            let health = action.opp.currentHealth;
+            let reducedHealth = health - action.user.attack;
             let opponent = { ...action.opp };
-            opponent.currentHealth = reducedHealth1;
-            let user = { ...action.user };
-            user.currentHealth = reducedHealth2;
-
+            opponent.currentHealth = reducedHealth;
             return {
-                user: user,
+                ...state,
                 opponent: opponent,
                 activeTurn: false
             };
-        
+        case actionTypes.REDUCE_USER_HEALTH:
+            let h = action.user.currentHealth;
+            let reducedH = h - action.opp.attack;
+            let user = { ...action.user };
+            user.currentHealth = reducedH;
+            return {
+                ...state,
+                user: user,
+                activeTurn: true
+            };
         default:
             return state;
-
     }
 }
 
