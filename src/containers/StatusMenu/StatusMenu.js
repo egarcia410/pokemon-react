@@ -7,7 +7,7 @@ class StatusMenu extends Component {
 
     convertHealth = (player) => {
         let health = player.currentHealth;
-        if (health < 0) {
+        if (health <= 0) {
             return 0;
         }
         let percentageDecrease = (health / player.fullHealth) * 100;

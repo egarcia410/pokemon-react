@@ -1,38 +1,37 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
 
 import './Prompt.css';
-import _ from 'lodash';
 
 class Prompt extends Component {
 
-    attack = () => {
-        return _.sample(this.props.opp.abilities).toUpperCase();
-    }
+    componentWillMount() {
+        let name = this.props.user.name;
+        this.props.initialPrompt(name);
+    };
 
     render() {
-        if (this.props.active) {
-            return (
-                <div className="col-12 col-md-8 promptBox">
-                    <h1>What will {this.props.user.name.toUpperCase()} do?</h1>
-                </div>
-            )
-        } else {
-            return (
-                <div className="col-12 col-md-8 promptBox">
-                    <h1>{this.props.opp.name.toUpperCase()} used {this.attack()}!</h1>
-                </div>
-            )
-        }
-    }
-}
+        return (
+            <div className="col-12 col-md-8 promptBox">
+                <h1>{this.props.status.promptMessage}</h1>
+            </div>
+        )
+    };
+};
 
 const mapStateToProps = state => {
     return {
         user: state.user,
         opp: state.opponent,
-        active: state.activeTurn
-    }
-}
+        status: state.status
+    };
+};
 
-export default connect(mapStateToProps)(Prompt);
+const mapDispatchToProps = dispatch => {
+    return {
+        initialPrompt: (name) => dispatch(actions.initialPrompt(name)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Prompt);
