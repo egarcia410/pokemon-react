@@ -15,6 +15,7 @@ class ActionMenu extends Component {
     };
 
     attack(attacked, attacker) {
+        // Displays attack message
         this.props.updateAttackPrompt(this.messageObj(attacker));
         if (attacked === this.props.user) {
             this.props.reduceUserHealth(attacker.attack);
@@ -23,37 +24,43 @@ class ActionMenu extends Component {
         }
     };
 
-    battle() {
-        this.props.updateActiveStatus(false)
-        this.attack(this.props.opp, this.props.user)
+    fight() {
+        // Opponent attacks User
         setTimeout(() => {
             this.attack(this.props.user, this.props.opp);
         }, 2000);
+        // Reset to initial user prompt, active turn set to true
         setTimeout(() => {
             this.props.initialPrompt(this.props.user.name);
             this.props.updateActiveStatus(true);
         }, 4000);
     }
 
+    run() {
+        let randomNum = Math.floor(Math.random() * 101);
+        // Escaped Successful
+        if (randomNum < 20) {
+            this.props.escapeBattle(true);
+        } else { // Escaped Failed
+            this.props.escapeBattle(false);
+            this.fight();
+        };
+    };
+
     performAction = (event) => {
         event.preventDefault();
+        this.props.updateActiveStatus(false)
         switch (event.target.name) {
             case 'fight':
-                this.battle();
+                this.attack(this.props.opp, this.props.user)
+                this.fight();
                 break;
             case 'bag':
                 break;
             case 'pokemon':
                 break;
             case 'run':
-                let randomNum = Math.floor(Math.random() * 101);
-                if (randomNum < 20) {
-                    this.props.escapeBattle(true);
-                };
-                this.props.escapeBattle(false);
-                setTimeout(() => {
-                    this.attackUser();
-                }, 2000);
+                this.run();
                 break;
             default:
                 console.log('Something went wrong!')

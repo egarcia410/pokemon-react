@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import thunk from 'redux-thunk';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -20,5 +21,13 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), applyMiddleware(thunk));
 
-ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('root'));
+const app = (
+    <Provider store={store}>
+        <Router>
+            <App />
+        </Router>
+    </Provider>
+);
+
+ReactDOM.render(app, document.getElementById('root'));
 registerServiceWorker();
