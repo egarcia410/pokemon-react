@@ -13,12 +13,14 @@ import opponentReducer from './store/reducers/opponent';
 import userReducer from './store/reducers/user';
 import statusReducer from './store/reducers/status';
 import playerReducer from './store/reducers/player';
+import townReducer from './store/reducers/town';
 
 const rootReducer = combineReducers({
     opponent: opponentReducer,
     user: userReducer,
     status: statusReducer,
     player: playerReducer,
+    town: townReducer,
 });
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), applyMiddleware(thunk));

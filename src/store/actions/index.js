@@ -16,3 +16,7 @@ export {
 export {
     addPokemon,
 } from './player';
+
+export {
+    updatePlayerPosition,
+} from './town';
