@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import * as actions from '../../store/actions/index';
-
 import Pokemon from '../../entities/Pokemon';
 import PokemonService from '../../services/PokemonService';
 
 import './StarterPokemon.css';
 
 class StarterPokemon extends Component {
+
+    componentWillMount() {
+        // Redirect player if have pokemon already
+        if (this.props.player.pokemon.length > 0) {
+            this.props.history.replace('/town');
+        }
+    }
 
     onSelectPokemon(name) {
         // Get pokemon info from database
@@ -26,7 +33,9 @@ class StarterPokemon extends Component {
                     result.data[0].level,
                 );
                 // Add pokemon instance to player's inventory
-                console.log(pokemon);
+                this.props.addPokemon(pokemon);
+                // Redirect player to town map
+                this.props.history.replace('/town');
             })
             .catch(error => {
                 console.log(error);
@@ -47,10 +56,16 @@ class StarterPokemon extends Component {
     };
 };
 
+const mapStateToProps = state => {
+    return {
+        player: state.player
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         addPokemon: (pokemon) => dispatch(actions.addPokemon(pokemon)),
     };
 };
 
-export default connect(null, mapDispatchToProps)(StarterPokemon);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StarterPokemon));
