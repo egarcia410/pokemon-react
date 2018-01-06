@@ -12,3 +12,7 @@ export {
     initialPrompt,
     escapeBattle,
 } from './status';
+
+export {
+    addPokemon,
+} from './player';

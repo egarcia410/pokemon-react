@@ -12,7 +12,6 @@ const initialState = {
     currentAbility: '',
     catchRate: 5.9,
     level: 1,
-    // image: '../../images/4.png'      
 }
 
 const reducer = (state = initialState, action) => {

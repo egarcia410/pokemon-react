@@ -39,8 +39,9 @@ class ActionMenu extends Component {
     run() {
         let randomNum = Math.floor(Math.random() * 101);
         // Escaped Successful
-        if (randomNum < 20) {
+        if (randomNum < 100) {
             this.props.escapeBattle(true);
+            this.props.history.push('/');
         } else { // Escaped Failed
             this.props.escapeBattle(false);
             this.fight();

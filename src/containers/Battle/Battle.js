@@ -26,7 +26,7 @@ class Battle extends Component {
                 {/* Prompt & Actions */}
                 <div className="row">
                     <Prompt/>
-                    <ActionMenu/>
+                    <ActionMenu history={this.props.history}/>
                 </div>
             </div>
         )
