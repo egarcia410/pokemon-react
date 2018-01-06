@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import * as actions from '../../store/actions/index';
 import Pokemon from '../../entities/Pokemon';
 import PokemonService from '../../services/PokemonService';
+import swal from 'sweetalert';
 
 import './StarterPokemon.css';
 
@@ -34,8 +35,13 @@ class StarterPokemon extends Component {
                 );
                 // Add pokemon instance to player's inventory
                 this.props.addPokemon(pokemon);
-                // Redirect player to town map
-                this.props.history.replace('/town');
+                // Display message after player chooses pokemon
+                let message = `You have chosen ${result.data[0].name}, Good luck on your journey!`
+                swal('success', message, 'success')
+                    .then(value => {
+                        // When user clicks 'ok' button, redirect player to town map
+                        this.props.history.replace('/town');
+                    });
             })
             .catch(error => {
                 console.log(error);
@@ -46,9 +52,9 @@ class StarterPokemon extends Component {
         let starterPokemon = ['Bulbasaur', 'Charmander', 'Squirtle'];
         let pokemon = starterPokemon.map((pokemon, index) => {
             return (
-                <div className="col" key={index} onClick={() => this.onSelectPokemon(pokemon)}>
+                <div className="col pokemonBox hvr-grow" key={index} onClick={() => this.onSelectPokemon(pokemon)}>
                     <img className="pokemon" src={`https://img.pokemondb.net/sprites/x-y/normal/${pokemon.toLowerCase()}.png`} alt={pokemon} />
-                    <h2 className="pokemonName">{pokemon.toUpperCase()}</h2>
+                    <h2 className={this.props.class}>{pokemon.toUpperCase()}</h2>
                 </div>
             );
         });

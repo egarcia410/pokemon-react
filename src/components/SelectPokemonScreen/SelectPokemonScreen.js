@@ -8,10 +8,10 @@ class SelectPokemonScreen extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container-fluid selectScreen">
                 <h1 className="title">SELECT A POKEMON!</h1>
                 <div className="row">
-                    <StarterPokemon />
+                    <StarterPokemon class="title"/>
                 </div>
             </div>
         );
