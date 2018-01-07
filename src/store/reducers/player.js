@@ -5,8 +5,7 @@ const initialState = {
     pokemon: [],
     items: [],
     badges: [],
-    // xPos: 1,
-    // yPos: 1
+    money: 0,
 };
 
 const reducer = (state = initialState, action) => {

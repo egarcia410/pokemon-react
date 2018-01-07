@@ -5,6 +5,16 @@ module.exports = {
     getPokemonByName(req, res) {
         knex('pokemons').where('name', req.params.name)
             .then(result => {
+                return res.send(result);
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },
+    // Retrieve specific pokemon by rarity
+    getPokemonByRarity(req, res) {
+        knex('pokemons').where('rarity', req.params.rarity)
+            .then(result => {
                 console.log(result)
                 return res.send(result);
             })

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import PokemonService from '../../services/PokemonService';
 
 import Tree from '../../images/town/tree1.png';
 
@@ -36,20 +37,51 @@ class Town extends Component {
     };
 
     moveLeft = () => {
-        this.props.updatePlayerPosition(this.props.rowPos, this.props.colPos - 1); 
+        this.move(this.props.rowPos, this.props.colPos - 1); 
     };
 
     moveRight = () => {
-        this.props.updatePlayerPosition(this.props.rowPos, this.props.colPos + 1);
+        this.move(this.props.rowPos, this.props.colPos + 1);
     };
 
     moveUp = () => {
-        this.props.updatePlayerPosition(this.props.rowPos - 1, this.props.colPos);
+        this.move(this.props.rowPos - 1, this.props.colPos);
     }
 
     moveDown = () => {
-        this.props.updatePlayerPosition(this.props.rowPos + 1, this.props.colPos);
+        this.move(this.props.rowPos + 1, this.props.colPos);
     };
+
+    move(rowPos, colPos) {
+        const tile = this.props.map[rowPos][colPos];
+        this.props.updatePlayerPosition(rowPos, colPos);
+        // Enter Store
+        if (tile === 'ST') {
+            console.log('Store')
+        }
+        // Enter Gym
+        if (tile === 'GL') {
+            console.log('Gym Leader')
+        }
+        // Walking around in tall grass
+        if (tile === 'TG') {
+            let randomNum = Math.floor(Math.random() * 101);
+            // Common Pokemon Encountered
+            if (randomNum  < 60) {
+                // Find random Common pokemon from database
+                PokemonService.getPokemonByRarity('common')
+                    .then(result => {
+                        console.log(result);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                // Create enemy pokemon instance
+                console.log('common');
+
+            }
+        }
+    }
 
     renderTown = () => {
         return this.props.map.map((row, rowIndex) => {

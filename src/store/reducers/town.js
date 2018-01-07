@@ -29,8 +29,8 @@ const initialState = {
     colPos: 1
 };
 
-function validPlayerPosition(state, rowPos, colPos) {
-    let pos = state.map[rowPos][colPos] 
+function validPosition(state, rowPos, colPos) {
+    let pos = state.map[rowPos][colPos]
     if (pos === 'TR' || pos === 'BT' || pos === 'BB') {
         return false;
     }
@@ -41,7 +41,7 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.UPDATE_PLAYER_POSITION:
             // Check if new player position is valid
-            if (validPlayerPosition(state, action.rowPos, action.colPos)) {
+            if (validPosition(state, action.rowPos, action.colPos)) {
                 return {
                     ...state,
                     rowPos: action.rowPos,
