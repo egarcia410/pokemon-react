@@ -27,6 +27,7 @@ class StarterPokemon extends Component {
                     result.data[0].name,
                     result.data[0].type,
                     result.data[0].health,
+                    result.data[0].health,
                     result.data[0].attackDamage,
                     result.data[0].attackName,
                     result.data[0].catchRate,
@@ -34,7 +35,7 @@ class StarterPokemon extends Component {
                     result.data[0].level,
                 );
                 // Add pokemon instance to player's inventory
-                this.props.addPokemon(pokemon);
+                this.props.addPlayerPokemon(pokemon);
                 // Display message after player chooses pokemon
                 let message = `You have chosen ${result.data[0].name}, Good luck on your journey!`
                 swal('success', message, 'success')
@@ -70,7 +71,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addPokemon: (pokemon) => dispatch(actions.addPokemon(pokemon)),
+        addPlayerPokemon: (pokemon) => dispatch(actions.addPlayerPokemon(pokemon)),
     };
 };
 

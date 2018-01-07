@@ -6,3 +6,10 @@ export const reduceOppHealth = (attackDamage) => {
         attackDamage: attackDamage
     };
 };
+
+export const addOppPokemon = (pokemon) => {
+    return {
+        type: actionTypes.ADD_OPP_POKEMON,
+        pokemon: pokemon
+    };
+};

@@ -13,13 +13,13 @@ class Pokemon extends Component {
         if (this.props.isUser) {
             return (
                 <div className="col-12 col-md-8 pokemonBox">
-                    <img className="pokemon" src={this.convertImage(this.props.user.name)} alt={this.props.user.name}/>
+                    <img className="pokemon" src={this.convertImage(this.props.playerPokemon[this.props.activePlayerPokemon].name)} alt={this.props.playerPokemon[this.props.activePlayerPokemon].name}/>
                 </div>
             )
         } else {
             return (
                 <div className="col-12 col-md-8 pokemonBox">
-                    <img className="pokemon" src={this.convertImage(this.props.opp.name)} alt={this.props.opp.name}/>
+                    <img className="pokemon" src={this.convertImage(this.props.oppPokemon[this.props.activeOppPokemon].name)} alt={this.props.oppPokemon[this.props.activeOppPokemon].name}/>
                 </div>     
             )    
         }
@@ -28,8 +28,10 @@ class Pokemon extends Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user,
-        opp: state.opponent
+        activePlayerPokemon: state.player.activePokemon,
+        activeOppPokemon: state.opponent.activePokemon,
+        playerPokemon: state.player.pokemon,
+        oppPokemon: state.opponent.pokemon
     };
 }
 

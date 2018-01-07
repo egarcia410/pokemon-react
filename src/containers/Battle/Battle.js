@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import StatusMenu from '../../containers/StatusMenu/StatusMenu';
 import Pokemon from '../../containers/Pokemon/Pokemon';
 import Prompt from '../../containers/Prompt/Prompt';
@@ -33,4 +34,13 @@ class Battle extends Component {
     }
 }
 
-export default Battle;
+const mapStateToProps = state => {
+    return {
+        activePlayerPokemon: state.player.activePokemon,
+        activeOppPokemon: state.opponent.activePokemon,
+        playerPokemon: state.player.pokemon,
+        oppPokemon: state.opponent.pokemon
+    };
+}
+
+export default connect(mapStateToProps)(Battle);

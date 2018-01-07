@@ -5,12 +5,12 @@ import './StatusMenu.css';
 
 class StatusMenu extends Component {
 
-    convertHealth = (player) => {
-        let health = player.currentHealth;
+    convertHealth = (pokemon) => {
+        let health = pokemon.currentHealth;
         if (health <= 0) {
             return 0;
         }
-        let percentageDecrease = (health / player.fullHealth) * 100;
+        let percentageDecrease = (health / pokemon.maxHealth) * 100;
         return percentageDecrease;
     }
 
@@ -20,12 +20,12 @@ class StatusMenu extends Component {
                 <div className="statusBar col-12 col-md-4">
                     <div className="topStatusBar">
                         <div className="nameType">
-                            <h1 className="name">{this.props.user.name} <span className="type">{this.props.user.type[0]}</span> </h1>
+                            <h1 className="name">{this.props.playerPokemon[this.props.activePlayerPokemon].name} <span className="type">{this.props.playerPokemon[this.props.activePlayerPokemon].type}</span> </h1>
                         </div>
-                        <h2 className="level">Lv {this.props.user.level}</h2>
+                        <h2 className="level">Lv {this.props.playerPokemon[this.props.activePlayerPokemon].level}</h2>
                     </div>
                     <div className="bottomStatusBar">
-                        <div style={{ width: this.convertHealth(this.props.user) + '%' }} className="healthBar">HP {this.props.user.currentHealth}</div>
+                        <div style={{ width: this.convertHealth(this.props.playerPokemon[this.props.activePlayerPokemon]) + '%' }} className="healthBar">HP {this.props.playerPokemon[this.props.activePlayerPokemon].currentHealth}</div>
                     </div>
                 </div>
             )
@@ -34,12 +34,12 @@ class StatusMenu extends Component {
                 <div className="statusBar col-12 col-md-4">
                     <div className="topStatusBar">
                         <div className="nameType">
-                            <h1 className="name">{this.props.opp.name} <span className="type">{this.props.opp.type[0]}</span> </h1>
+                            <h1 className="name">{this.props.oppPokemon[this.props.activeOppPokemon].name} <span className="type">{this.props.oppPokemon[this.props.activeOppPokemon].type[0]}</span> </h1>
                         </div>
-                        <h2 className="level">Lv {this.props.opp.level}</h2>
+                        <h2 className="level">Lv {this.props.oppPokemon[this.props.activeOppPokemon].level}</h2>
                     </div>
                     <div className="bottomStatusBar">
-                        <div style={{ width: this.convertHealth(this.props.opp) + '%' }} className="healthBar">HP {this.props.opp.currentHealth}</div>
+                        <div style={{ width: this.convertHealth(this.props.oppPokemon[this.props.activeOppPokemon]) + '%' }} className="healthBar">HP {this.props.oppPokemon[this.props.activeOppPokemon].currentHealth}</div>
                     </div>
                 </div>
             )
@@ -49,8 +49,10 @@ class StatusMenu extends Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user,
-        opp: state.opponent
+        activePlayerPokemon: state.player.activePokemon,
+        activeOppPokemon: state.opponent.activePokemon,
+        playerPokemon: state.player.pokemon,
+        oppPokemon: state.opponent.pokemon
     };
 };
 

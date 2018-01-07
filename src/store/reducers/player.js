@@ -6,11 +6,12 @@ const initialState = {
     items: [],
     badges: [],
     money: 0,
+    activePokemon: 0
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.ADD_POKEMON:
+        case actionTypes.ADD_PLAYER_POKEMON:
             return {
                 ...state,
                 pokemon: [...state.pokemon, action.pokemon],

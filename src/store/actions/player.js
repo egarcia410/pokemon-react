@@ -1,8 +1,8 @@
 import * as actionTypes from './actionTypes';
 
-export const addPokemon = (pokemon) => {
+export const addPlayerPokemon = (pokemon) => {
     return {
-        type: actionTypes.ADD_POKEMON,
+        type: actionTypes.ADD_PLAYER_POKEMON,
         pokemon: pokemon
     };
 };

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import PokemonService from '../../services/PokemonService';
+import Pokemon from '../../entities/Pokemon';
+import _ from 'lodash';
 
 import Tree from '../../images/town/tree1.png';
 
@@ -71,12 +73,27 @@ class Town extends Component {
                 // Find random Common pokemon from database
                 PokemonService.getPokemonByRarity('common')
                     .then(result => {
-                        console.log(result);
+                        // Select random pokemon from rarity list
+                        let randPokemon = _.sample(result.data);
+                        // Create enemy pokemon instance
+                        let pokemon = new Pokemon(
+                            randPokemon.id,
+                            randPokemon.name,
+                            randPokemon.type,
+                            randPokemon.health,
+                            randPokemon.health,
+                            randPokemon.attackDamage,
+                            randPokemon.attackName,
+                            randPokemon.catchRate,
+                            randPokemon.xp,
+                            randPokemon.level
+                        )
+                        this.props.addOppPokemon(pokemon);
+                        this.props.history.replace('/battle');
                     })
                     .catch(error => {
                         console.log(error);
                     })
-                // Create enemy pokemon instance
                 console.log('common');
 
             }
@@ -144,6 +161,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         updatePlayerPosition: (row, col) => dispatch(actions.updatePlayerPosition(row, col)),
+        addOppPokemon: (pokemon) => dispatch(actions.addOppPokemon(pokemon)),
     }
 }
 

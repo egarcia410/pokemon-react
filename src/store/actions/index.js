@@ -14,8 +14,12 @@ export {
 } from './status';
 
 export {
-    addPokemon,
+    addPlayerPokemon,
 } from './player';
+
+export {
+    addOppPokemon,
+} from './opponent';
 
 export {
     updatePlayerPosition,
