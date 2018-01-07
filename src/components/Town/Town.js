@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
 import Tree from '../../images/town/tree1.png';
-import TallGrass from '../../images/town/tallGrass.png';
-import Water from '../../images/town/water.png';
 
 import './Town.css';
 
@@ -20,7 +18,6 @@ class Town extends Component {
     }
 
     action = (e) => {
-        console.log(e.keyCode);
         switch (e.keyCode) {
             case 37:
                 this.moveLeft();

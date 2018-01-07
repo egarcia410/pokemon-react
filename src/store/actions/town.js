@@ -1,9 +1,9 @@
 import * as actionTypes from './actionTypes';
 
-export const updatePlayerPosition = (row, col) => {
+export const updatePlayerPosition = (rowPos, colPos) => {
     return {
         type: actionTypes.UPDATE_PLAYER_POSITION,
-        row: row,
-        col: col
+        rowPos: rowPos,
+        colPos: colPos
     };
 };
