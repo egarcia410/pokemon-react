@@ -34,7 +34,7 @@ class StatusMenu extends Component {
                 <div className="statusBar col-12 col-md-4">
                     <div className="topStatusBar">
                         <div className="nameType">
-                            <h1 className="name">{this.props.oppPokemon[this.props.activeOppPokemon].name} <span className="type">{this.props.oppPokemon[this.props.activeOppPokemon].type[0]}</span> </h1>
+                            <h1 className="name">{this.props.oppPokemon[this.props.activeOppPokemon].name} <span className="type">{this.props.oppPokemon[this.props.activeOppPokemon].type}</span> </h1>
                         </div>
                         <h2 className="level">Lv {this.props.oppPokemon[this.props.activeOppPokemon].level}</h2>
                     </div>

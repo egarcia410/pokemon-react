@@ -6,3 +6,10 @@ export const addPlayerPokemon = (pokemon) => {
         pokemon: pokemon
     };
 };
+
+export const reducePlayerHealth = (attackDamage) => {
+    return {
+        type: actionTypes.REDUCE_PLAYER_HEALTH,
+        attackDamage: attackDamage
+    };
+};

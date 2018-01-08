@@ -1,5 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
 // import { updateObject } from '../utility';
+import _ from 'lodash';
 
 const initialState = {
     pokemon: [],
@@ -16,6 +17,14 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 pokemon: [...state.pokemon, action.pokemon],
             };
+        case actionTypes.REDUCE_PLAYER_HEALTH:
+            let pokemon = _.cloneDeep(state.pokemon);
+            let health = pokemon[state.activePokemon].currentHealth;
+            pokemon.currentHealth = health - action.attackDamage;
+            return {
+                ...state,
+                pokemon
+            }
         default: 
             return state
     }

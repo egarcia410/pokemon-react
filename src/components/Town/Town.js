@@ -94,8 +94,6 @@ class Town extends Component {
                     .catch(error => {
                         console.log(error);
                     })
-                console.log('common');
-
             }
         }
     }

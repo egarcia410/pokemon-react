@@ -1,16 +1,9 @@
 import * as actionTypes from './actionTypes';
 
-export const initialPrompt = (name) => {
+export const updatePromptMessage = (msg) => {
     return {
-        type: actionTypes.INITIAL_PROMPT,
-        name: name
-    };
-};
-
-export const updateAttackPrompt = (obj) => {
-    return {
-        type: actionTypes.UPDATE_ATTACK_PROMPT,
-        obj: obj
+        type: actionTypes.UPDATE_PROMPT_MESSAGE,
+        msg: msg
     };
 };
 

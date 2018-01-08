@@ -3,15 +3,29 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
 import './Prompt.css';
+import { setTimeout } from 'timers';
 
 class Prompt extends Component {
 
     componentWillMount() {
-        let name = this.props.user.name;
-        this.props.initialPrompt(name);
+        // If the battle encounter is not a gym battle
+        if (!this.props.status.gymBattle) {
+            let name = this.props.oppPokemon[this.props.activeOppPokemon].name;
+            let message = `A wild ${name.toUpperCase()} appeared!`;
+            this.props.updatePromptMessage(message);
+        }
+        // If battle encounter is a gym battle
+
+        setTimeout(() => {
+            let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
+            let message = `What will ${name.toUpperCase()} do!`;
+            this.props.updatePromptMessage(message);
+        }, 3000)
+
     };
 
     render() {
+
         return (
             <div className="col-12 col-md-8 promptBox">
                 <h1>{this.props.status.promptMessage}</h1>
@@ -22,15 +36,17 @@ class Prompt extends Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user,
-        opp: state.opponent,
+        activePlayerPokemon: state.player.activePokemon,
+        activeOppPokemon: state.opponent.activePokemon,
+        playerPokemon: state.player.pokemon,
+        oppPokemon: state.opponent.pokemon,
         status: state.status
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        initialPrompt: (name) => dispatch(actions.initialPrompt(name)),
+        updatePromptMessage: (msg) => dispatch(actions.updatePromptMessage(msg)),
     };
 };
 

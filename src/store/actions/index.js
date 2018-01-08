@@ -1,26 +1,23 @@
+// Player
 export {
+    addPlayerPokemon,
+    reducePlayerHealth,
+} from './player';
+
+// Opponent
+export {
+    addOppPokemon,
     reduceOppHealth,
 } from './opponent';
 
-export {
-    reduceUserHealth,
-} from './user';
-
-export {
-    updateAttackPrompt,
-    updateActiveStatus,
-    initialPrompt,
-    escapeBattle,
-} from './status';
-
-export {
-    addPlayerPokemon,
-} from './player';
-
-export {
-    addOppPokemon,
-} from './opponent';
-
+// Town
 export {
     updatePlayerPosition,
 } from './town';
+
+// Status
+export {
+    updateActiveStatus,
+    updatePromptMessage,
+    escapeBattle,
+} from './status';

@@ -3,57 +3,16 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
 import './ActionMenu.css';
-import _ from 'lodash';
+
 
 class ActionMenu extends Component {
-
-    messageObj(pokemon) {
-        return {
-            pokemon: pokemon.name.toUpperCase(),
-            attack: _.sample(pokemon.abilities).toUpperCase()
-        };
-    };
-
-    attack(attacked, attacker) {
-        // Displays attack message
-        this.props.updateAttackPrompt(this.messageObj(attacker));
-        if (attacked === this.props.user) {
-            this.props.reduceUserHealth(attacker.attack);
-        } else {
-            this.props.reduceOppHealth(attacker.attack);
-        }
-    };
-
-    fight() {
-        // Opponent attacks User
-        setTimeout(() => {
-            this.attack(this.props.user, this.props.opp);
-        }, 2000);
-        // Reset to initial user prompt, active turn set to true
-        setTimeout(() => {
-            this.props.initialPrompt(this.props.user.name);
-            this.props.updateActiveStatus(true);
-        }, 4000);
-    }
-
-    run() {
-        let randomNum = Math.floor(Math.random() * 101);
-        // Escaped Successful
-        if (randomNum < 100) {
-            this.props.escapeBattle(true);
-            this.props.history.push('/');
-        } else { // Escaped Failed
-            this.props.escapeBattle(false);
-            this.fight();
-        };
-    };
 
     performAction = (event) => {
         event.preventDefault();
         this.props.updateActiveStatus(false)
         switch (event.target.name) {
             case 'fight':
-                this.attack(this.props.opp, this.props.user)
+                this.attack(this.props.oppPokemon[this.props.activeOppPokemon], this.props.playerPokemon[this.props.activePlayerPokemon])
                 this.fight();
                 break;
             case 'bag':
@@ -68,38 +27,81 @@ class ActionMenu extends Component {
         }
     }
 
+    fight() {
+        // Opponent attacks User
+        setTimeout(() => {
+            this.attack(this.props.playerPokemon[this.props.activePlayerPokemon], this.props.oppPokemon[this.props.activeOppPokemon])
+        }, 2000);
+        // Reset player prompt, active turn set to true
+        setTimeout(() => {
+            let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
+            let message = `What will ${name.toUpperCase()} do!`;
+            this.props.updatePromptMessage(message);
+            this.props.updateActiveStatus(true);
+        }, 4000);
+    }
+
+    attack(attacked, attacker) {
+        // Displays attack message
+        console.log(attacker.attackName);
+        let message = `${attacker.name.toUpperCase()} used ${attacker.attackName.toUpperCase()}`;
+        this.props.updatePromptMessage(message);
+        // Reduces health of attacked pokemon
+        if (attacked === this.props.playerPokemon[this.props.activePlayerPokemon]) {
+            this.props.reducePlayerHealth(attacker.attackDamage);
+        } else {
+            this.props.reduceOppHealth(attacker.attackDamage);
+        }
+    };
+
+    run() {
+        let randomNum = Math.floor(Math.random() * 101);
+        // Escaped Successful
+        if (randomNum < 100) {
+            this.props.escapeBattle(true);
+            this.props.history.push('/town');
+        } else { 
+            // Escaped Failed
+            this.props.escapeBattle(false);
+            this.fight();
+        };
+    };
+
     render() {
         return (
-            <div className="col-12 col-md-4 actionBox">
-                <div className="row">
-                    <div className="col-6">
-                        {this.props.status.activeTurn 
-                            ? <button name="fight" onClick={(e) => this.performAction(e)}>FIGHT</button>
-                            : <button disabled >FIGHT</button>
-                        }
+            <div className="col-12 col-md-4 actionMenuOuter">
+                <div className="actionMenuInner">
+                    <div className="row">
+                        <div className="col-6">
+                            {this.props.status.activeTurn 
+                                ? <button name="fight" onClick={(e) => this.performAction(e)}>FIGHT</button>
+                                : <button disabled >FIGHT</button>
+                            }
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col-5">
+                            {this.props.status.activeTurn
+                                ? <button name="bag" onClick={(e) => this.performAction(e)}>BAG</button>
+                                : <button disabled >BAG</button>
+                            }
+                        </div>
                     </div>
-                    <div className="col-1"></div>
-                    <div className="col-5">
-                        {this.props.status.activeTurn
-                            ? <button name="bag" onClick={(e) => this.performAction(e)}>BAG</button>
-                            : <button disabled >BAG</button>
-                        }
+                    <div className="row">
+                        <div className="col-6">
+                            {this.props.status.activeTurn
+                                ? <button name="pokemon" onClick={(e) => this.performAction(e)}>POKeMON</button>
+                                : <button disabled >POKeMON</button>
+                            }
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col-5">
+                            {this.props.status.activeTurn
+                                ? <button name="run" onClick={(e) => this.performAction(e)}>RUN</button>
+                                : <button disabled >RUN</button>
+                            }
+                        </div>
                     </div>
-                </div>
-                <div className="row">
-                    <div className="col-6">
-                        {this.props.status.activeTurn
-                            ? <button name="pokemon" onClick={(e) => this.performAction(e)}>POKeMON</button>
-                            : <button disabled >POKeMON</button>
-                        }
-                    </div>
-                    <div className="col-1"></div>
-                    <div className="col-5">
-                        {this.props.status.activeTurn
-                            ? <button name="run" onClick={(e) => this.performAction(e)}>RUN</button>
-                            : <button disabled >RUN</button>
-                        }
-                    </div>
+
                 </div>
             </div>
         )
@@ -108,8 +110,13 @@ class ActionMenu extends Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user,
-        opp: state.opponent,
+        activePlayerPokemon: state.player.activePokemon,
+        activeOppPokemon: state.opponent.activePokemon,
+        playerPokemon: state.player.pokemon,
+        oppPokemon: state.opponent.pokemon,
+
+        // user: state.user,
+        // opp: state.opponent,
         status: state.status
     };
 };
@@ -117,10 +124,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         reduceOppHealth: (attackDamage) => dispatch(actions.reduceOppHealth(attackDamage)),
-        reduceUserHealth: (attackDamage) => dispatch(actions.reduceUserHealth(attackDamage)),
-        updateAttackPrompt: (obj) => dispatch(actions.updateAttackPrompt(obj)),
+        reducePlayerHealth: (attackDamage) => dispatch(actions.reducePlayerHealth(attackDamage)),
         updateActiveStatus: (status) => dispatch(actions.updateActiveStatus(status)),
-        initialPrompt: (name) => dispatch(actions.initialPrompt(name)),
+        updatePromptMessage: (msg) => dispatch(actions.updatePromptMessage(msg)),
         escapeBattle: (status) => dispatch(actions.escapeBattle(status)),
     };                               
 };

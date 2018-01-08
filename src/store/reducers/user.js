@@ -16,7 +16,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.REDUCE_USER_HEALTH:
+        case actionTypes.REDUCE_PLAYER_HEALTH:
             let health = state.currentHealth;
             let reducedHealth = health - action.attackDamage;
             return updateObject(state, {

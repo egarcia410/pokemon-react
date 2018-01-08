@@ -12,13 +12,13 @@ class Pokemon extends Component {
     render() {
         if (this.props.isUser) {
             return (
-                <div className="col-12 col-md-8 pokemonBox">
+                <div className="col-12 col-md-8 pokemonImg">
                     <img className="pokemon" src={this.convertImage(this.props.playerPokemon[this.props.activePlayerPokemon].name)} alt={this.props.playerPokemon[this.props.activePlayerPokemon].name}/>
                 </div>
             )
         } else {
             return (
-                <div className="col-12 col-md-8 pokemonBox">
+                <div className="col-12 col-md-8 pokemonImg">
                     <img className="pokemon" src={this.convertImage(this.props.oppPokemon[this.props.activeOppPokemon].name)} alt={this.props.oppPokemon[this.props.activeOppPokemon].name}/>
                 </div>     
             )    

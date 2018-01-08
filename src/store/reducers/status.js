@@ -3,18 +3,15 @@ import { updateObject } from '../utility';
 
 const initialState = {
     activeTurn: true,
-    promptMessage: ''
+    promptMessage: '',
+    gymBattle: false
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.INITIAL_PROMPT:
+        case actionTypes.UPDATE_PROMPT_MESSAGE:
             return updateObject(state, {
-                promptMessage: `What will ${action.name.toUpperCase()} do?`
-            });
-        case actionTypes.UPDATE_ATTACK_PROMPT:
-            return updateObject(state, {
-                promptMessage: `${action.obj.pokemon} used ${action.obj.attack}`
+                promptMessage: action.msg
             });
         case actionTypes.UPDATE_ACTIVE_STATUS:
             return updateObject(state, { activeTurn: action.status });

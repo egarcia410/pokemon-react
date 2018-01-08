@@ -1,5 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../utility';
+// import { updateObject } from '../utility';
+import _ from 'lodash';
 
 const initialState = {
     pokemon: [],
@@ -8,12 +9,14 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        // case actionTypes.REDUCE_OPP_HEALTH:
-        //     let health = state.currentHealth;
-        //     let reducedHealth = health - action.attackDamage;
-        //     return updateObject(state, {
-        //         currentHealth: reducedHealth
-        //     });
+        case actionTypes.REDUCE_OPP_HEALTH:
+            let pokemon = _.cloneDeep(state.pokemon);
+            let health = pokemon[state.activePokemon].currentHealth;
+            pokemon.currentHealth = health - action.attackDamage;
+            return {
+                ...state,
+                pokemon
+            }
         case actionTypes.ADD_OPP_POKEMON:
             return {
                 ...state,
