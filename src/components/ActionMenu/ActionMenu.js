@@ -7,6 +7,10 @@ import './ActionMenu.css';
 
 class ActionMenu extends Component {
 
+    state = {
+        isBagOpened: false,
+    };
+
     performAction = (event) => {
         event.preventDefault();
         this.props.updateActiveStatus(false)
@@ -16,6 +20,9 @@ class ActionMenu extends Component {
                 this.fight();
                 break;
             case 'bag':
+                this.setState({
+                    isBagOpened: true
+                });
                 break;
             case 'pokemon':
                 break;
@@ -43,7 +50,6 @@ class ActionMenu extends Component {
 
     attack(attacked, attacker) {
         // Displays attack message
-        console.log(attacker.attackName);
         let message = `${attacker.name.toUpperCase()} used ${attacker.attackName.toUpperCase()}`;
         this.props.updatePromptMessage(message);
         // Reduces health of attacked pokemon
@@ -57,9 +63,11 @@ class ActionMenu extends Component {
     run() {
         let randomNum = Math.floor(Math.random() * 101);
         // Escaped Successful
-        if (randomNum < 100) {
+        if (randomNum < 50) {
             this.props.escapeBattle(true);
-            this.props.history.push('/town');
+            setTimeout(() => {
+                this.props.history.push('/town');
+            }, 2000)
         } else { 
             // Escaped Failed
             this.props.escapeBattle(false);
@@ -67,7 +75,22 @@ class ActionMenu extends Component {
         };
     };
 
+    renderItemIventory() {
+
+    }
+
     render() {
+        if (this.state.isBagOpened) {
+            return (
+                <div className="col-12 col-md-4 actionMenuOuter">
+                    <div className="actionMenuInner">
+                        <div className="row">
+                            {this.renderItemIventory()}
+                        </div>
+                    </div>
+                </div>
+            )
+        }
         return (
             <div className="col-12 col-md-4 actionMenuOuter">
                 <div className="actionMenuInner">
@@ -111,12 +134,11 @@ class ActionMenu extends Component {
 const mapStateToProps = state => {
     return {
         activePlayerPokemon: state.player.activePokemon,
-        activeOppPokemon: state.opponent.activePokemon,
         playerPokemon: state.player.pokemon,
+        player: state.player,
+        activeOppPokemon: state.opponent.activePokemon,
         oppPokemon: state.opponent.pokemon,
-
-        // user: state.user,
-        // opp: state.opponent,
+        opp: state.opponent,
         status: state.status
     };
 };

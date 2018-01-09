@@ -18,6 +18,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ESCAPE_BATTLE:
             if (action.escapedStatus) {
                 return updateObject(state, {
+                    activeTurn: true,
                     promptMessage: 'You escaped safely!'
                 });
             }

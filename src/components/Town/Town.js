@@ -140,9 +140,11 @@ class Town extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container-fluid townWrapper">
                 <h1>Pallet Town</h1>
-                {this.renderTown()}
+                <div className="town">
+                    {this.renderTown()}
+                </div>
             </div>
         )
     };

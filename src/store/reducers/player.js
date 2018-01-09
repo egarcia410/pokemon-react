@@ -4,9 +4,9 @@ import _ from 'lodash';
 
 const initialState = {
     pokemon: [],
-    items: [],
+    items: [{'Health Potion': 1}, {'PokeBall': 1}],
     badges: [],
-    money: 0,
+    money: 20,
     activePokemon: 0
 };
 
@@ -20,7 +20,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.REDUCE_PLAYER_HEALTH:
             let pokemon = _.cloneDeep(state.pokemon);
             let health = pokemon[state.activePokemon].currentHealth;
-            pokemon.currentHealth = health - action.attackDamage;
+            pokemon[state.activePokemon].currentHealth = health - action.attackDamage;
             return {
                 ...state,
                 pokemon
