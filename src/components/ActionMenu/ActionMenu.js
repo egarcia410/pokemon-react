@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import Items from '../Items/Items';
 
 import './ActionMenu.css';
 
@@ -8,7 +9,7 @@ import './ActionMenu.css';
 class ActionMenu extends Component {
 
     state = {
-        isBagOpened: false,
+        isBagOpen: false,
     };
 
     performAction = (event) => {
@@ -20,9 +21,7 @@ class ActionMenu extends Component {
                 this.fight();
                 break;
             case 'bag':
-                this.setState({
-                    isBagOpened: true
-                });
+                this.openBagInventory();
                 break;
             case 'pokemon':
                 break;
@@ -75,59 +74,60 @@ class ActionMenu extends Component {
         };
     };
 
-    renderItemIventory() {
-
+    openBagInventory() {
+        this.setState({
+            isBagOpen: true
+        });
     }
 
     render() {
-        if (this.state.isBagOpened) {
+        // Checking bag inventory for items
+        if (this.state.isBagOpen) {
+            return (
+                <div className="col-12 col-md-4 actionMenuOuter">
+                    <Items />
+                </div>
+            )
+        } else {
             return (
                 <div className="col-12 col-md-4 actionMenuOuter">
                     <div className="actionMenuInner">
                         <div className="row">
-                            {this.renderItemIventory()}
+                            <div className="col-6">
+                                {this.props.status.activeTurn 
+                                    ? <button name="fight" onClick={(e) => this.performAction(e)}>FIGHT</button>
+                                    : <button disabled >FIGHT</button>
+                                }
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col-5">
+                                {this.props.status.activeTurn
+                                    ? <button name="bag" onClick={(e) => this.performAction(e)}>BAG</button>
+                                    : <button disabled >BAG</button>
+                                }
+                            </div>
                         </div>
+                        <div className="row">
+                            <div className="col-6">
+                                {this.props.status.activeTurn
+                                    ? <button name="pokemon" onClick={(e) => this.performAction(e)}>POKeMON</button>
+                                    : <button disabled >POKeMON</button>
+                                }
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col-5">
+                                {this.props.status.activeTurn
+                                    ? <button name="run" onClick={(e) => this.performAction(e)}>RUN</button>
+                                    : <button disabled >RUN</button>
+                                }
+                            </div>
+                        </div>
+    
                     </div>
                 </div>
             )
-        }
-        return (
-            <div className="col-12 col-md-4 actionMenuOuter">
-                <div className="actionMenuInner">
-                    <div className="row">
-                        <div className="col-6">
-                            {this.props.status.activeTurn 
-                                ? <button name="fight" onClick={(e) => this.performAction(e)}>FIGHT</button>
-                                : <button disabled >FIGHT</button>
-                            }
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col-5">
-                            {this.props.status.activeTurn
-                                ? <button name="bag" onClick={(e) => this.performAction(e)}>BAG</button>
-                                : <button disabled >BAG</button>
-                            }
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-6">
-                            {this.props.status.activeTurn
-                                ? <button name="pokemon" onClick={(e) => this.performAction(e)}>POKeMON</button>
-                                : <button disabled >POKeMON</button>
-                            }
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col-5">
-                            {this.props.status.activeTurn
-                                ? <button name="run" onClick={(e) => this.performAction(e)}>RUN</button>
-                                : <button disabled >RUN</button>
-                            }
-                        </div>
-                    </div>
 
-                </div>
-            </div>
-        )
+        }
     }
 }
 
