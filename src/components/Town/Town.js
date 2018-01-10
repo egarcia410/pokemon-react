@@ -11,12 +11,11 @@ import './Town.css';
 
 class Town extends Component {
 
-    
     componentWillMount() {
         document.addEventListener("keydown", this.action);
     }
 
-    componentWillUnount() {
+    componentWillUnmount() {
         document.removeEventListener("keydown", this.action);
     }
 
