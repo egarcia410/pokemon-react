@@ -11,19 +11,22 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.REDUCE_OPP_HEALTH:
             let pokemon = _.cloneDeep(state.pokemon);
-            console.log(pokemon, 'POKEMON REDUCER OPP')
             let health = pokemon[state.activePokemon].currentHealth;
-            console.log(health, 'HEALTH')
             pokemon[state.activePokemon].currentHealth = health - action.attackDamage;
-            console.log(pokemon, "AFTERWARDS")
             return {
                 ...state,
                 pokemon
-            }
+            };
         case actionTypes.ADD_OPP_POKEMON:
             return {
                 ...state,
                 pokemon: [...state.pokemon, action.pokemon],
+            };
+        case actionTypes.RESET_OPPONENT:
+            console.log('RESET OPPONENT')
+            return {
+                pokemon: [],
+                activePokemon: 0
             };
         default:
             return state;

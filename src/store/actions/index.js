@@ -10,6 +10,7 @@ export {
 export {
     addOppPokemon,
     reduceOppHealth,
+    resetOpponent,
 } from './opponent';
 
 // Town

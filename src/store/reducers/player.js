@@ -34,9 +34,11 @@ const reducer = (state = initialState, action) => {
                 items
             }
         case actionTypes.INCREASE_HEALTH:
-            health = pokemon[state.activePokemon].currentHealth + 20;
+            console.log('health reducer', health)
             if (health > pokemon[state.activePokemon].maxHealth) {
                 pokemon[state.activePokemon].currentHealth = pokemon[state.activePokemon].maxHealth;
+            } else {
+                pokemon[state.activePokemon].currentHealth += 20;
             }
             return {
                 ...state,

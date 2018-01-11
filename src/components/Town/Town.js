@@ -13,11 +13,11 @@ class Town extends Component {
 
     componentWillMount() {
         document.addEventListener("keydown", this.action);
-    }
+    };
 
     componentWillUnmount() {
         document.removeEventListener("keydown", this.action);
-    }
+    };
 
     action = (e) => {
         switch (e.keyCode) {
@@ -161,7 +161,7 @@ const mapDispatchToProps = dispatch => {
     return {
         updatePlayerPosition: (row, col) => dispatch(actions.updatePlayerPosition(row, col)),
         addOppPokemon: (pokemon) => dispatch(actions.addOppPokemon(pokemon)),
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Town);
