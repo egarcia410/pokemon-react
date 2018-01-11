@@ -1,6 +1,8 @@
 // Player
 export const ADD_PLAYER_POKEMON = 'ADD_PLAYER_POKEMON';
 export const REDUCE_PLAYER_HEALTH = 'REDUCE_PLAYER_HEALTH';
+export const CONSUME_ITEM = 'CONSUME_ITEM';
+export const INCREASE_HEALTH = 'INCREASE_HEALTH';
 
 // Opponent
 export const ADD_OPP_POKEMON = 'ADD_OPP_POKEMON';

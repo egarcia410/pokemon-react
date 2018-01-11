@@ -8,7 +8,6 @@ export const addOppPokemon = (pokemon) => {
 };
 
 export const reduceOppHealth = (attackDamage) => {
-    console.log('reduce opp health action')
     return {
         type: actionTypes.REDUCE_OPP_HEALTH,
         attackDamage: attackDamage

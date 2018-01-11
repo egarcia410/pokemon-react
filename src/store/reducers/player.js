@@ -4,13 +4,14 @@ import _ from 'lodash';
 
 const initialState = {
     pokemon: [],
-    items: [{'Health Potion': 1}, {'PokeBall': 1}],
+    items: [{'Health': 1}, {'PokeBall': 1}],
     badges: [],
     money: 20,
     activePokemon: 0
 };
 
 const reducer = (state = initialState, action) => {
+    var pokemon = _.cloneDeep(state.pokemon);
     switch (action.type) {
         case actionTypes.ADD_PLAYER_POKEMON:
             return {
@@ -18,9 +19,25 @@ const reducer = (state = initialState, action) => {
                 pokemon: [...state.pokemon, action.pokemon],
             };
         case actionTypes.REDUCE_PLAYER_HEALTH:
-            let pokemon = _.cloneDeep(state.pokemon);
             let health = pokemon[state.activePokemon].currentHealth;
             pokemon[state.activePokemon].currentHealth = health - action.attackDamage;
+            return {
+                ...state,
+                pokemon
+            }
+        case actionTypes.CONSUME_ITEM:
+            let items = _.cloneDeep(state.items);
+            let itemCount = items[action.itemIndex][action.itemName];
+            items[action.itemIndex][action.itemName] = itemCount - 1;
+            return {
+                ...state,
+                items
+            }
+        case actionTypes.INCREASE_HEALTH:
+            health = pokemon[state.activePokemon].currentHealth + 20;
+            if (health > pokemon[state.activePokemon].maxHealth) {
+                pokemon[state.activePokemon].currentHealth = pokemon[state.activePokemon].maxHealth;
+            }
             return {
                 ...state,
                 pokemon

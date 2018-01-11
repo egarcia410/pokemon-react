@@ -14,18 +14,19 @@ class ActionMenu extends Component {
 
     performAction = (event) => {
         event.preventDefault();
-        this.props.updateActiveStatus(false)
         switch (event.target.name) {
             case 'fight':
+                this.props.updateActiveStatus(false)
                 this.attack(this.props.oppPokemon[this.props.activeOppPokemon], this.props.playerPokemon[this.props.activePlayerPokemon])
                 this.fight();
                 break;
             case 'bag':
-                this.openBagInventory();
+                this.toggleBagInventory();
                 break;
             case 'pokemon':
                 break;
             case 'run':
+                this.props.updateActiveStatus(false)
                 this.run();
                 break;
             default:
@@ -74,9 +75,9 @@ class ActionMenu extends Component {
         };
     };
 
-    openBagInventory() {
+    toggleBagInventory() {
         this.setState({
-            isBagOpen: true
+            isBagOpen: !this.state.isBagOpen
         });
     }
 
@@ -85,7 +86,7 @@ class ActionMenu extends Component {
         if (this.state.isBagOpen) {
             return (
                 <div className="col-12 col-md-4 actionMenuOuter">
-                    <Items />
+                    <Items fight={() => this.fight()} closeBag={() => this.toggleBagInventory()}/>
                 </div>
             )
         } else {

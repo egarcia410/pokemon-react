@@ -2,6 +2,8 @@
 export {
     addPlayerPokemon,
     reducePlayerHealth,
+    consumeItem,
+    increaseHealth,
 } from './player';
 
 // Opponent

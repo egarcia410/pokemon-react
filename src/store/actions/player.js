@@ -13,3 +13,17 @@ export const reducePlayerHealth = (attackDamage) => {
         attackDamage: attackDamage
     };
 };
+
+export const consumeItem = (itemName, itemIndex) => {
+    return {
+        type: actionTypes.CONSUME_ITEM,
+        itemName: itemName,
+        itemIndex: itemIndex
+    };
+};
+
+export const increaseHealth = () => {
+    return {
+        type: actionTypes.INCREASE_HEALTH
+    };
+};
