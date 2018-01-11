@@ -23,7 +23,6 @@ const reducer = (state = initialState, action) => {
                 pokemon: [...state.pokemon, action.pokemon],
             };
         case actionTypes.RESET_OPPONENT:
-            console.log('RESET OPPONENT')
             return {
                 pokemon: [],
                 activePokemon: 0

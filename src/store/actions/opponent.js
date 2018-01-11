@@ -15,7 +15,6 @@ export const reduceOppHealth = (attackDamage) => {
 };
 
 export const resetOpponent = () => {
-    console.log("RESET OPP ACTION")
     return {
         type: actionTypes.RESET_OPPONENT
     };
