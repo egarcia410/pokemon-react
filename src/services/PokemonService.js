@@ -7,7 +7,7 @@ export default {
     getPokemonByRarity(rarity) {
         return Api().get('get-pokemon-by-rarity/' + rarity);
     },    
-    getPokemon(id) {
-        return Api().get('get-pokemon/' + id);
+    getPokemonById(id) {
+        return Api().get('get-pokemon-by-id/' + id);
     },
 };

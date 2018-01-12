@@ -7,12 +7,23 @@ import './TownMenu.css';
 class TownMenu extends Component {
 
     render() {
+        // let menu = (
+        //     <div className="col-12 townMenu">
+        //         <button onClick={this.props.pokemonList()} className="col">POKeMON</button>
+        //         <button onClick={this.props.itemsList()} className="col">BAG</button>
+        //     </div>
+        // )
+        // if (this.props.isBagOpen) {
+        //     menu = (
+        //         <div className="col-12 townMenu">
+        //             <button onClick={this.props.pokemonList()} className="col">POKeMON</button>
+        //             <button onClick={this.props.itemsList()} className="col">BAG</button>
+        //         </div>
+        //     )
+        // }
         return (
             <div>
-                <div className="col-12 townMenu">
-                        <button onClick={this.props.pokemonList()} className="col">POKeMON</button>
-                        <button onClick={this.props.itemsList()} className="col">BAG</button>
-                </div>
+                {/* {menu} */}
                 <div className="col-12 townMenuPrompt">
                     {this.props.message}
                 </div>

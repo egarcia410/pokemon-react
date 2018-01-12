@@ -14,7 +14,8 @@ import './Town.css';
 class Town extends Component {
 
     state = {
-        message: 'PALLET TOWN'
+        message: 'PALLET TOWN',
+        isBagOpen: false
     };
 
     componentWillMount() {
@@ -102,6 +103,7 @@ class Town extends Component {
                             Math.round(this.props.playerPokemon[0].attackDamage * 1.2),
                             randPokemon.attackName,
                             Math.round(this.props.playerPokemon[0].level * 1.2),
+                            randPokemon.evolves,
                         )
                         this.props.addOppPokemon(pokemon);
                         this.props.history.replace('/battle');
@@ -155,14 +157,15 @@ class Town extends Component {
 
     displayPokemonList() {
         console.log('Pokemon inventory')
-        console.log(this.props);
         this.props.history.replace('/pokemon');
 
     };
 
     displayItemsList() {
         console.log('Item inventory')
-        this.props.history.replace('/items');
+        // this.setState({
+        //     isBagOpen: !isBagOpen
+        // })
     };
 
     render() {
@@ -171,9 +174,10 @@ class Town extends Component {
                 <div className="town">
                     {this.renderTown()}
                 </div>
-                <TownMenu 
-                    pokemonList={() => this.displayPokemonList} 
-                    itemsList={() => this.displayItemsList}
+                <TownMenu
+                    isBagOpen={this.state.isBagOpen}
+                    pokemonList={() => this.displayPokemonList()} 
+                    itemsList={() => this.displayItemsList()}
                     message={this.state.message}/>
             </div>
         )

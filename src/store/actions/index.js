@@ -5,6 +5,7 @@ export {
     consumeItem,
     increaseHealth,
     gainExperience,
+    pokemonEvolved,
 } from './player';
 
 // Opponent

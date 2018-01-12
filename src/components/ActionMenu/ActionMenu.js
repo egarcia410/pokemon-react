@@ -4,6 +4,7 @@ import * as actions from '../../store/actions/index';
 import Items from '../Items/Items';
 
 import './ActionMenu.css';
+import PokemonService from '../../services/PokemonService';
 
 
 class ActionMenu extends Component {
@@ -49,9 +50,22 @@ class ActionMenu extends Component {
                                 let message = `Your Pokemon have gained experience!`
                                 this.props.updatePromptMessage(message);
                             }, 6000);
-                            setTimeout(() => {
-                                this.props.history.replace('/town');
-                            }, 9000);
+                            // Check if pokemon evolved
+                            var promises = [];
+                            for (var i=0; i < this.props.playerPokemon.length; i++){
+                                let pokemon = this.props.playerPokemon[i];
+                                let p = PokemonService.getPokemonById(pokemon.evolves);
+                                promises.push(p);
+                            }
+                            console.log('PROMISES', promises)
+                            Promise.all(promises)
+                                .then((responses) => {
+                                    console.log(responses);
+                                    this.props.pokemonEvolved(responses);
+                                    setTimeout(() => {
+                                        this.props.history.replace('/town');
+                                    }, 9000);
+                                });
                         };
                     } else {
                         // Opponent pokemon is not dead
@@ -192,7 +206,8 @@ const mapDispatchToProps = dispatch => {
         updatePromptMessage: (msg) => dispatch(actions.updatePromptMessage(msg)),
         escapeBattle: (status) => dispatch(actions.escapeBattle(status)),
         switchOppPokemon: () => dispatch(actions.switchOppPokemon()),
-        gainExperience: (pokemon) => dispatch(actions.gainExperience(pokemon)),
+        gainExperience: () => dispatch(actions.gainExperience()),
+        pokemonEvolved: (responses) => dispatch(actions.pokemonEvolved(responses)),
     };                               
 };
 

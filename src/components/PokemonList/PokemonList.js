@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 // import { withRouter } from 'react-router';
 // import * as actions from '../../store/actions/index';
 import { Button } from 'react-bootstrap';
@@ -34,4 +34,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default PokemonList
+export default connect(mapStateToProps)(PokemonList);

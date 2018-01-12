@@ -81,19 +81,22 @@ class Items extends Component {
         }
     }
     
-    render() {
-        const items = this.props.playerItems.map((item, index) => {
-            for (let key in item) {
+    items () {
+        return this.props.playerItems.map((item, index) => {
+            return Object.keys(item).map((key) => {
                 return (
                     <div className="row" key={index}>
                         <button value={key} index={index} onClick={() => this.handleConsumeItem(key, index)}>{key} X {item[key]}</button>
                     </div>
                 )
-            }
+            });
         })
+    }
+
+    render() {
         return (
             <div className="actionMenuInner">
-                {items}
+                {this.items()}
                 <div className="row">
                     <button onClick={() => this.props.closeBag()}>Close Bag</button>
                 </div>

@@ -33,3 +33,11 @@ export const gainExperience = () => {
         type: actionTypes.GAIN_EXPERIENCE
     };
 };
+
+export const pokemonEvolved = (responses) => {
+    console.log('EVOLVED ACTION')
+    return {
+        type: actionTypes.POKEMON_EVOLVED,
+        responses: responses
+    };
+};

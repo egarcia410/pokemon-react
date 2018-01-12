@@ -5,7 +5,7 @@ import _ from 'lodash';
 const initialState = {
     pokemon: [],
     pokemonInventory: [],
-    items: [{'Health': 5}, {'PokeBall': 3}],
+    items: [{'Health': 10}, {'PokeBall': 3}],
     badges: [],
     money: 50,
     activePokemon: 0
@@ -62,6 +62,21 @@ const reducer = (state = initialState, action) => {
                 } else {
                     p.xp += 1;
                 };
+            });
+            return {
+                ...state,
+                pokemon
+            }
+        case actionTypes.POKEMON_EVOLVED:
+            pokemon.forEach((p, index) => {
+                if (p.level % 1 === 0) {
+                    p.id = action.responses[index].data[0].id;
+                    p.name = action.responses[index].data[0].name;
+                    p.attackName = action.responses[index].data[0].attackName;
+                    if (p.evolves) {
+                        p.evolves = action.responses[index].data[0].evolves;
+                    }
+                }
             });
             return {
                 ...state,
