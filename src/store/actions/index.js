@@ -6,6 +6,9 @@ export {
     increaseHealth,
     gainExperience,
     pokemonEvolved,
+    updateActivePokemon,
+    revivePokemon,
+    resetActivePokemon,
 } from './player';
 
 // Opponent

@@ -70,17 +70,40 @@ const reducer = (state = initialState, action) => {
         case actionTypes.POKEMON_EVOLVED:
             pokemon.forEach((p, index) => {
                 if (p.level % 1 === 0) {
-                    p.id = action.responses[index].data[0].id;
-                    p.name = action.responses[index].data[0].name;
-                    p.attackName = action.responses[index].data[0].attackName;
-                    if (p.evolves) {
-                        p.evolves = action.responses[index].data[0].evolves;
+                    if (action.responses[index]) {
+                        p.id = action.responses[index].data[0].id;
+                        p.name = action.responses[index].data[0].name;
+                        p.attackName = action.responses[index].data[0].attackName;
+                        if (p.evolves) {
+                            p.evolves = action.responses[index].data[0].evolves;
+                        }
                     }
                 }
             });
             return {
                 ...state,
                 pokemon
+            }
+        case actionTypes.UPDATE_ACTIVE_POKEMON:
+            let a = state.activePokemon + 1;
+            return {
+                ...state,
+                activePokemon: a
+            };
+        case actionTypes.REVIVE_POKEMON:
+            pokemon.forEach((p, index) => {
+                if (p.currentHealth === 0) {
+                    p.currentHealth = state.pokemon[index].maxHealth;
+                }
+            });
+            return {
+                ...state,
+                pokemon
+            }
+        case actionTypes.RESET_ACTIVE_POKEMON:
+            return {
+                ...state,
+                activePokemon: 0
             }
         default: 
             return state

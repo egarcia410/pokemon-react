@@ -59,6 +59,7 @@ class Items extends Component {
                             // Display successful capture messsage
                             let message = `Gotcha! ${this.props.oppPokemon[this.props.activeOppPokemon].name.toUpperCase()} was caught!`;
                             this.props.updatePromptMessage(message);
+                            this.props.updateActiveStatus(true);
                             // return to town
                             setTimeout(() => {
                                 this.props.history.replace('/town');

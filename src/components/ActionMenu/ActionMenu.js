@@ -5,6 +5,7 @@ import Items from '../Items/Items';
 
 import './ActionMenu.css';
 import PokemonService from '../../services/PokemonService';
+import { setTimeout } from 'timers';
 
 
 class ActionMenu extends Component {
@@ -54,15 +55,18 @@ class ActionMenu extends Component {
                             var promises = [];
                             for (var i=0; i < this.props.playerPokemon.length; i++){
                                 let pokemon = this.props.playerPokemon[i];
-                                let p = PokemonService.getPokemonById(pokemon.evolves);
+                                var p = ''
+                                if (pokemon.evolves) {
+                                    p = PokemonService.getPokemonById(pokemon.evolves);
+                                }
                                 promises.push(p);
                             }
-                            console.log('PROMISES', promises)
                             Promise.all(promises)
                                 .then((responses) => {
-                                    console.log(responses);
                                     this.props.pokemonEvolved(responses);
                                     setTimeout(() => {
+                                        this.props.revivePokemon();
+                                        this.props.updateActiveStatus(true);  
                                         this.props.history.replace('/town');
                                     }, 9000);
                                 });
@@ -93,13 +97,41 @@ class ActionMenu extends Component {
         setTimeout(() => {
             this.attack(this.props.playerPokemon[this.props.activePlayerPokemon], this.props.oppPokemon[this.props.activeOppPokemon])
         }, 2000);
+        setTimeout(() =>{
+            // Check your pokemon died
+            if (this.props.playerPokemon[this.props.activePlayerPokemon].currentHealth === 0) {
+                console.log('POKEMON DIED')
+                let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
+                let message = `${name.toUpperCase()} Died!`;
+                this.props.updatePromptMessage(message);
+                // Checks if there are more pokemon in player inventory
+                if (this.props.activePlayerPokemon < this.props.playerPokemon.length - 1) {
+                    // Changes player pokemon
+                    console.log('SWITCHING POKEMON')
+                    this.props.updateActivePokemon();
+                    setTimeout(() => {
+                        let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
+                        let message = `Go ${name.toUpperCase()}!`;
+                        this.props.updatePromptMessage(message);
+                    }, 2000)
+                } else {
+                    console.log("REVIVE POKEMON")
+                    // Revive pokemon and return to town
+                    this.props.revivePokemon();
+                    setTimeout(() => {
+                        this.props.updateActiveStatus(true);
+                        this.props.history.replace('/town');
+                    }, 2000);
+                };
+            };
+        }, 3000)
         // Reset player prompt, active turn set to true
         setTimeout(() => {
             let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
             let message = `What will ${name.toUpperCase()} do!`;
             this.props.updatePromptMessage(message);
             this.props.updateActiveStatus(true);
-        }, 4000);
+        }, 9000);
     }
 
     attack(attacked, attacker) {
@@ -208,6 +240,8 @@ const mapDispatchToProps = dispatch => {
         switchOppPokemon: () => dispatch(actions.switchOppPokemon()),
         gainExperience: () => dispatch(actions.gainExperience()),
         pokemonEvolved: (responses) => dispatch(actions.pokemonEvolved(responses)),
+        updateActivePokemon: () => dispatch(actions.updateActivePokemon()),
+        revivePokemon: () => dispatch(actions.revivePokemon()),
     };                               
 };
 

@@ -35,9 +35,26 @@ export const gainExperience = () => {
 };
 
 export const pokemonEvolved = (responses) => {
-    console.log('EVOLVED ACTION')
     return {
         type: actionTypes.POKEMON_EVOLVED,
         responses: responses
+    };
+};
+
+export const updateActivePokemon = () => {
+    return {
+        type: actionTypes.UPDATE_ACTIVE_POKEMON,
+    };
+};
+
+export const revivePokemon = () => {
+    return {
+        type: actionTypes.REVIVE_POKEMON,
+    };
+};
+
+export const resetActivePokemon = () => {
+    return {
+        type: actionTypes.RESET_ACTIVE_POKEMON,
     };
 };

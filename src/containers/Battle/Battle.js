@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import * as actions from '../../store/actions/index';
 import StatusMenu from '../../containers/StatusMenu/StatusMenu';
 import Pokemon from '../../containers/Pokemon/Pokemon';
@@ -12,6 +13,7 @@ class Battle extends Component {
 
     componentWillUnmount() {
         this.props.resetOpponent();
+        this.props.resetActivePokemon();
     };
 
     render() {
@@ -51,7 +53,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         resetOpponent: () => dispatch(actions.resetOpponent()),
+        resetActivePokemon: () => dispatch(actions.resetActivePokemon()),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Battle);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Battle));
