@@ -3,6 +3,8 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Battle from './containers/Battle/Battle';
 import Town from './components/Town/Town';
 import SelectPokemonScreen from './components/SelectPokemonScreen/SelectPokemonScreen';
+import PokemonList from './components/PokemonList/PokemonList'
+import ItemsList from './components/ItemsList/ItemsList'
 import './App.css';
 
 class App extends Component {
@@ -11,6 +13,8 @@ class App extends Component {
       <Switch>
         <Route path="/battle" component={Battle} />
         <Route path="/town" component={Town} />
+        <Route path="/pokemon" component={PokemonList} />
+        <Route path="/items" component={ItemsList} />
         <Route path="/" exact component={SelectPokemonScreen} />
         <Redirect to="/" />
       </Switch>

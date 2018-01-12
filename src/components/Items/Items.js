@@ -33,7 +33,7 @@ class Items extends Component {
                 break;
             case 'PokeBall':
                 // Limit pokemon can have to 6 or in gym battle
-                if (this.props.playerPokemon.length === 6 || !this.props.gymBattle) {
+                if (this.props.playerPokemon.length === 6 || this.props.gymBattle) {
                     return;
                 };
                 // Check if pokeball exists

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import * as actions from '../../store/actions/index';
 import PokemonService from '../../services/PokemonService';
 import Pokemon from '../../entities/Pokemon';
-// import Prompt from '../../containers/Prompt/Prompt';
-// import ActionMenu from '../ActionMenu/ActionMenu';
+import TownMenu from '../TownMenu/TownMenu';
 import _ from 'lodash';
 
 import Tree from '../../images/town/tree1.png';
@@ -12,6 +12,10 @@ import Tree from '../../images/town/tree1.png';
 import './Town.css';
 
 class Town extends Component {
+
+    state = {
+        message: 'PALLET TOWN'
+    };
 
     componentWillMount() {
         document.addEventListener("keydown", this.action);
@@ -149,18 +153,28 @@ class Town extends Component {
         });
     };
 
+    displayPokemonList() {
+        console.log('Pokemon inventory')
+        console.log(this.props);
+        this.props.history.replace('/pokemon');
+
+    };
+
+    displayItemsList() {
+        console.log('Item inventory')
+        this.props.history.replace('/items');
+    };
+
     render() {
         return (
             <div className="container townWrapper">
-                <h1>Pallet Town</h1>
                 <div className="town">
                     {this.renderTown()}
                 </div>
-                {/* Prompt & Actions */}
-                <div className="row">
-                    {/* <Prompt />
-                    <ActionMenu history={this.props.history} /> */}
-                </div>
+                <TownMenu 
+                    pokemonList={() => this.displayPokemonList} 
+                    itemsList={() => this.displayItemsList}
+                    message={this.state.message}/>
             </div>
         )
     };
@@ -182,4 +196,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Town);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Town));

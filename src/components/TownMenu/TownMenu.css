@@ -1,0 +1,23 @@
+.townMenuPrompt {
+    border-radius: 8px;
+    border: 8px solid #C7A750;
+    background-color: #2A5067;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 80%;
+    min-height: 100px;
+}
+
+.townMenu {
+    border-radius: 8px;
+    border: 8px solid #7073A0;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    width: 80%;
+}
