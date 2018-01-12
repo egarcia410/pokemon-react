@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import PokemonService from '../../services/PokemonService';
 import Pokemon from '../../entities/Pokemon';
+// import Prompt from '../../containers/Prompt/Prompt';
+// import ActionMenu from '../ActionMenu/ActionMenu';
 import _ from 'lodash';
 
 import Tree from '../../images/town/tree1.png';
@@ -67,10 +69,22 @@ class Town extends Component {
         // Walking around in tall grass
         if (tile === 'TG') {
             let randomNum = Math.floor(Math.random() * 101);
+            let rarity = '';
             // Common Pokemon Encountered
-            if (randomNum  < 60) {
-                // Find random Common pokemon from database
-                PokemonService.getPokemonByRarity('common')
+            if (randomNum  <= 30) {
+                rarity = 'common';
+            };
+            // Uncommon Pokemon Encounter
+            if (randomNum > 30 && randomNum <= 50) {
+                rarity = 'uncommon';
+            };
+            // Rare Pokemon Encounter
+            if (randomNum > 50 && randomNum <= 60) {
+                rarity = 'rare';
+            };
+            if (rarity) {
+                // Find pokemon from database
+                PokemonService.getPokemonByRarity(rarity)
                     .then(result => {
                         // Select random pokemon from rarity list
                         let randPokemon = _.sample(result.data);
@@ -79,13 +93,11 @@ class Town extends Component {
                             randPokemon.id,
                             randPokemon.name,
                             randPokemon.type,
-                            randPokemon.health,
-                            randPokemon.health,
-                            randPokemon.attackDamage,
+                            Math.round(this.props.playerPokemon[0].maxHealth * 1.3),
+                            Math.round(this.props.playerPokemon[0].maxHealth * 1.3),
+                            Math.round(this.props.playerPokemon[0].attackDamage * 1.2),
                             randPokemon.attackName,
-                            randPokemon.catchRate,
-                            randPokemon.xp,
-                            randPokemon.level
+                            Math.round(this.props.playerPokemon[0].level * 1.2),
                         )
                         this.props.addOppPokemon(pokemon);
                         this.props.history.replace('/battle');
@@ -139,10 +151,15 @@ class Town extends Component {
 
     render() {
         return (
-            <div className="container-fluid townWrapper">
+            <div className="container townWrapper">
                 <h1>Pallet Town</h1>
                 <div className="town">
                     {this.renderTown()}
+                </div>
+                {/* Prompt & Actions */}
+                <div className="row">
+                    {/* <Prompt />
+                    <ActionMenu history={this.props.history} /> */}
                 </div>
             </div>
         )
@@ -154,6 +171,7 @@ const mapStateToProps = state => {
         map: state.town.map,
         rowPos: state.town.rowPos,
         colPos: state.town.colPos,
+        playerPokemon: state.player.pokemon
     };
 };
 

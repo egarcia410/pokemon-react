@@ -6,16 +6,12 @@ import * as actions from '../../store/actions/index';
 class Items extends Component {
 
     handleConsumeItem(name, index) {
-        console.log(name);
         switch(name) {
             case 'Health':
                 // Check if health potion exists
                 if (this.props.playerItems[index][name] > 0) {
                     // If pokemon already has full health
                     if (this.props.playerPokemon[this.props.activePlayerPokemon].maxHealth === this.props.playerPokemon[this.props.activePlayerPokemon].currentHealth) {
-                        console.log('FULL HEALTH')
-                        console.log(this.props.playerPokemon[this.props.activePlayerPokemon].maxHealth)
-                        console.log(this.props.playerPokemon[this.props.activePlayerPokemon].currentHealth)
                         return;
                     } else {
                         // Decrease item inventory
@@ -36,6 +32,10 @@ class Items extends Component {
                 };
                 break;
             case 'PokeBall':
+                // Limit pokemon can have to 6 or in gym battle
+                if (this.props.playerPokemon.length === 6 || !this.props.gymBattle) {
+                    return;
+                };
                 // Check if pokeball exists
                 if (this.props.playerItems[index][name] > 0) {
                     // Checks to see if not gym battle
@@ -50,13 +50,10 @@ class Items extends Component {
                         // Calculate catch rate
                         // M is between 0 and 255
                         let M = Math.floor(Math.random() * 256);
-                        console.log(M);
                         // f = (HPmax * 255 * 4) / (HPcurrent * ball)
                         let f = Math.floor((this.props.oppPokemon[this.props.activeOppPokemon].maxHealth * 255 * 4) / (this.props.oppPokemon[this.props.activeOppPokemon].currentHealth * 8)); 
-                        console.log(f);
                         // if f is greater than M, pokemon is caught
                         if (f > M) {
-                            console.log('Caught pokemon')
                             // Add pokemon to player inventory
                             this.props.addPlayerPokemon(this.props.oppPokemon[this.props.activeOppPokemon])
                             // Display successful capture messsage

@@ -18,7 +18,47 @@ class ActionMenu extends Component {
             case 'fight':
                 this.props.updateActiveStatus(false)
                 this.attack(this.props.oppPokemon[this.props.activeOppPokemon], this.props.playerPokemon[this.props.activePlayerPokemon])
-                this.fight();
+                // Check if opponent pokemon is dead
+                setTimeout(() => {
+                    if (this.props.oppPokemon[this.props.activeOppPokemon].currentHealth === 0) {
+                        // Checks if there are multiple opponent pokemon
+                        if (this.props.oppPokemon.length > 1) {
+                            // Display message announcing opponent pokemon has fainted
+                            let message = `${this.props.oppPokemon[this.props.activeOppPokemon].name.toUpperCase()} has fainted!`
+                            this.props.updatePromptMessage(message);
+                            // Replaces dead pokemon with other pokemon
+                            this.props.switchOppPokemon();
+                            // Display message announcing new opponent pokemon entering fight
+                            setTimeout(() => {
+                                let message = `${this.props.oppPokemon[this.props.activeOppPokemon].name.toUpperCase()} has entered the fight!`
+                                this.props.updatePromptMessage(message);
+                                this.props.updateActiveStatus(true);  
+                            }, 3000);
+                        } else {
+                            // All opponent pokemon are dead!
+                            let message = `${this.props.oppPokemon[0].name.toUpperCase()} has fainted!`
+                            this.props.updatePromptMessage(message);
+                            setTimeout(() => {
+                                let message = `You Won!`
+                                this.props.updatePromptMessage(message);
+                            }, 3000);
+                            // Player pokemon gain experience
+                            this.props.gainExperience();
+                            // Display message of pokemon gaining experience
+                            setTimeout(() => {
+                                let message = `Your Pokemon have gained experience!`
+                                this.props.updatePromptMessage(message);
+                            }, 6000);
+                            setTimeout(() => {
+                                this.props.history.replace('/town');
+                            }, 9000);
+                        };
+                    } else {
+                        // Opponent pokemon is not dead
+                        this.fight();
+                    }
+                    
+                }, 2000);
                 break;
             case 'bag':
                 this.toggleBagInventory();
@@ -151,6 +191,8 @@ const mapDispatchToProps = dispatch => {
         updateActiveStatus: (status) => dispatch(actions.updateActiveStatus(status)),
         updatePromptMessage: (msg) => dispatch(actions.updatePromptMessage(msg)),
         escapeBattle: (status) => dispatch(actions.escapeBattle(status)),
+        switchOppPokemon: () => dispatch(actions.switchOppPokemon()),
+        gainExperience: (pokemon) => dispatch(actions.gainExperience(pokemon)),
     };                               
 };
 

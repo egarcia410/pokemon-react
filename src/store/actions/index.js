@@ -4,6 +4,7 @@ export {
     reducePlayerHealth,
     consumeItem,
     increaseHealth,
+    gainExperience,
 } from './player';
 
 // Opponent
@@ -11,6 +12,7 @@ export {
     addOppPokemon,
     reduceOppHealth,
     resetOpponent,
+    switchOppPokemon,
 } from './opponent';
 
 // Town

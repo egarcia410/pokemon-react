@@ -10,18 +10,19 @@ class Prompt extends Component {
     componentWillMount() {
         // If the battle encounter is not a gym battle
         if (!this.props.status.gymBattle) {
+
             let name = this.props.oppPokemon[this.props.activeOppPokemon].name;
             let message = `A wild ${name.toUpperCase()} appeared!`;
             this.props.updatePromptMessage(message);
+        } else {
+            // If battle encounter is a gym battle
+            return;
         }
-        // If battle encounter is a gym battle
-
         setTimeout(() => {
             let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
             let message = `What will ${name.toUpperCase()} do!`;
             this.props.updatePromptMessage(message);
-        }, 3000)
-
+        }, 3000);
     };
 
     render() {

@@ -27,3 +27,9 @@ export const increaseHealth = () => {
         type: actionTypes.INCREASE_HEALTH
     };
 };
+
+export const gainExperience = () => {
+    return {
+        type: actionTypes.GAIN_EXPERIENCE
+    };
+};

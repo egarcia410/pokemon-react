@@ -30,9 +30,6 @@ class StarterPokemon extends Component {
                     result.data[0].health,
                     result.data[0].attackDamage,
                     result.data[0].attackName,
-                    result.data[0].catchRate,
-                    result.data[0].xp,
-                    result.data[0].level,
                 );
                 // Add pokemon instance to player's inventory
                 this.props.addPlayerPokemon(pokemon);

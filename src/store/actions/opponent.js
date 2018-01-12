@@ -19,3 +19,9 @@ export const resetOpponent = () => {
         type: actionTypes.RESET_OPPONENT
     };
 };
+
+export const switchOppPokemon = () => {
+    return {
+        type: actionTypes.SWITCH_OPP_POKEMON
+    };
+};

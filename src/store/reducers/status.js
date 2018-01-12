@@ -4,7 +4,7 @@ import { updateObject } from '../utility';
 const initialState = {
     activeTurn: true,
     promptMessage: '',
-    gymBattle: false
+    gymBattle: false,
 };
 
 const reducer = (state = initialState, action) => {

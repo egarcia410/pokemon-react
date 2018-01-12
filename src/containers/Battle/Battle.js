@@ -11,8 +11,6 @@ import './Battle.css';
 class Battle extends Component {
 
     componentWillUnmount() {
-        console.log('UNMOUNT');
-        // reset battle state
         this.props.resetOpponent();
     };
 
@@ -52,7 +50,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        resetOpponent: () => dispatch(actions.resetOpponent())
+        resetOpponent: () => dispatch(actions.resetOpponent()),
     };
 };
 
