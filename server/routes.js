@@ -9,7 +9,7 @@ module.exports = (app) => {
     
     app.use(serveStatic(__dirname + '/../build'));
     
-    app.all('/*', function (req, res) {
+    app.get('/*', function (req, res) {
         res.sendfile(__dirname + '/../build/index.html');
-    })
+    });
 };

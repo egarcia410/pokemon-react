@@ -1,5 +1,6 @@
 import axios from 'axios';
-import location from 'window-or-global';
+
+var location = window.location;
 
 // Creates an instance of axios, setting the base URL to link up with the backend
 export default () => {
