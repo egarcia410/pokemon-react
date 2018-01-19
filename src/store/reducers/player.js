@@ -7,12 +7,13 @@ const initialState = {
     pokemonInventory: [],
     items: [{'Health': 10}, {'PokeBall': 3}],
     badges: [],
-    money: 50,
+    money: 300,
     activePokemon: 0
 };
 
 const reducer = (state = initialState, action) => {
     var pokemon = _.cloneDeep(state.pokemon);
+    var items = _.cloneDeep(state.items);
     if (pokemon[state.activePokemon]) {
         var health = pokemon[state.activePokemon].currentHealth;
     }
@@ -35,7 +36,6 @@ const reducer = (state = initialState, action) => {
                 pokemon
             }
         case actionTypes.CONSUME_ITEM:
-            let items = _.cloneDeep(state.items);
             let itemCount = items[action.itemIndex][action.itemName];
             items[action.itemIndex][action.itemName] = itemCount - 1;
             return {
@@ -104,6 +104,19 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 activePokemon: 0
+            }
+        case actionTypes.BUY_ITEM:
+            let reducedMoney = state.money - action.price;
+            let money = reducedMoney;
+            items.forEach((item, index) => {
+                if (item[action.item]) {
+                    item[action.item] += 1;
+                };
+            });
+            return {
+                ...state,
+                items,
+                money
             }
         default: 
             return state

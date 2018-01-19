@@ -3,6 +3,11 @@
     text-align: center;
 }
 
+.PokeDollar {
+    width: 20px;
+    height: 20px;
+}
+
 .town {
     display: grid;
     justify-content: center;

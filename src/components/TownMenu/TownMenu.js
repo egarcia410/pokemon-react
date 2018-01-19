@@ -7,23 +7,33 @@ import './TownMenu.css';
 class TownMenu extends Component {
 
     render() {
-        // let menu = (
-        //     <div className="col-12 townMenu">
-        //         <button onClick={this.props.pokemonList()} className="col">POKeMON</button>
-        //         <button onClick={this.props.itemsList()} className="col">BAG</button>
-        //     </div>
-        // )
-        // if (this.props.isBagOpen) {
-        //     menu = (
-        //         <div className="col-12 townMenu">
-        //             <button onClick={this.props.pokemonList()} className="col">POKeMON</button>
-        //             <button onClick={this.props.itemsList()} className="col">BAG</button>
-        //         </div>
-        //     )
-        // }
+
+        let menu = (
+            <div className="col-12 townMenu">
+                <button onClick={() => this.props.pokemonList()} className="col">POKeMON</button>
+                <button onClick={() => this.props.itemsList()} className="col">BAG</button>
+            </div>
+        )
+        if (this.props.isBagOpen) {
+            menu = (
+                <div className="col-12 townMenu">
+                    <button onClick={() => this.props.pokemonList()} className="col">POKeMON</button>
+                    <button onClick={() => this.props.itemsList()} className="col">BAG</button>
+                </div>
+            )
+        }
+        if (this.props.isStoreOpen) {
+
+            menu = (
+                <div className="col-12 townMenu">
+                    <button name="Health" onClick={(e) => this.props.buyItem(e)} className="col">Health</button>
+                    <button name="PokeBall" onClick={(e) => this.props.buyItem(e)} className="col">PokeBall</button>
+                </div>
+            )
+        }
         return (
             <div>
-                {/* {menu} */}
+                {menu}
                 <div className="col-12 townMenuPrompt">
                     {this.props.message}
                 </div>

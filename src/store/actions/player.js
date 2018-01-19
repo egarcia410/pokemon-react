@@ -58,3 +58,11 @@ export const resetActivePokemon = () => {
         type: actionTypes.RESET_ACTIVE_POKEMON,
     };
 };
+
+export const buyItem = (item, price) => {
+    return {
+        type: actionTypes.BUY_ITEM,
+        item: item,
+        price: price
+    };
+};

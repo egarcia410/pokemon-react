@@ -12,6 +12,7 @@ import Player from '../../images/town/player.jpg';
 import Grass from '../../images/town/grass.png';
 import TallGrass from '../../images/town/tallGrass.png';
 import Water from '../../images/town/water.png';
+import PokeDollar from '../../images/town/pokedollar.png';
 
 import './Town.css';
 
@@ -19,7 +20,8 @@ class Town extends Component {
 
     state = {
         message: 'PALLET TOWN',
-        isBagOpen: false
+        isBagOpen: false,
+        isStoreOpen: false,
     };
 
     componentWillMount() {
@@ -67,9 +69,21 @@ class Town extends Component {
     move(rowPos, colPos) {
         const tile = this.props.map[rowPos][colPos];
         this.props.updatePlayerPosition(rowPos, colPos);
+        // Exit store automatically if not on store tile
+        if (this.state.isStoreOpen && tile !== 'ST') {
+            // Reset message and menu
+            this.setState({
+                message: 'PALLET TOWN',
+                isStoreOpen: false
+            })
+        }
         // Enter Store
         if (tile === 'ST') {
-            console.log('Store')
+            this.setState({
+                message: 'What would you like to buy?',
+                isStoreOpen: true
+            })
+
         }
         // Enter Gym
         if (tile === 'GL') {
@@ -181,15 +195,50 @@ class Town extends Component {
         //     isBagOpen: !isBagOpen
         // })
     };
+    
+    buyItem(e) {
+        switch (e.target.name) {
+            case 'Health':
+                if (this.props.playerMoney < 100) {
+                    this.setState({
+                        message: 'Unable to afford item!'
+                    })
+                } else {
+                    this.setState({
+                        message: `You bought a ${e.target.name} Potion`
+                    })
+                    this.props.buyItem(e.target.name, 100);
+                }
+            break;
+            case 'PokeBall':
+                if (this.props.playerMoney < 150) {
+                    this.setState({
+                        message: 'Unable to afford item!'
+                    })
+                } else {
+                    this.setState({
+                        message: `You bought a ${e.target.name}`
+                    })
+                    this.props.buyItem(e.target.name, 150);
+                }
+                break;
+            default: return;
+        }
+    }
+
 
     render() {
         return (
             <div className="container townWrapper">
+                <img className="PokeDollar" src={PokeDollar} alt="PokeDollar"/>
+                {this.props.playerMoney}
                 <div className="town">
                     {this.renderTown()}
                 </div>
                 <TownMenu
+                    isStoreOpen={this.state.isStoreOpen}
                     isBagOpen={this.state.isBagOpen}
+                    buyItem={(e) => this.buyItem(e)}
                     pokemonList={() => this.displayPokemonList()} 
                     itemsList={() => this.displayItemsList()}
                     message={this.state.message}/>
@@ -203,7 +252,8 @@ const mapStateToProps = state => {
         map: state.town.map,
         rowPos: state.town.rowPos,
         colPos: state.town.colPos,
-        playerPokemon: state.player.pokemon
+        playerPokemon: state.player.pokemon,
+        playerMoney: state.player.money
     };
 };
 
@@ -211,6 +261,7 @@ const mapDispatchToProps = dispatch => {
     return {
         updatePlayerPosition: (row, col) => dispatch(actions.updatePlayerPosition(row, col)),
         addOppPokemon: (pokemon) => dispatch(actions.addOppPokemon(pokemon)),
+        buyItem: (item, price) => dispatch(actions.buyItem(item, price)),
     };
 };
 
