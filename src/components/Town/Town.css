@@ -18,14 +18,6 @@
     height: 40px;
 }
 
-.Player {
-    background-color: black;
-}
-
-.PT {
-    background-color: #6CCF9A;
-}
-
 .BT {
     background-color: #DC684B;    
 }
@@ -40,12 +32,4 @@
 
 .GL {
     background-color: #FEDC32;
-}
-
-.WT {
-    background-color: #2F82DD;   
-}
-
-.TG {
-    background-color: #5EB38C;      
 }

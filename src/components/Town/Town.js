@@ -8,6 +8,10 @@ import TownMenu from '../TownMenu/TownMenu';
 import _ from 'lodash';
 
 import Tree from '../../images/town/tree1.png';
+import Player from '../../images/town/player.jpg';
+import Grass from '../../images/town/grass.png';
+import TallGrass from '../../images/town/tallGrass.png';
+import Water from '../../images/town/water.png';
 
 import './Town.css';
 
@@ -134,12 +138,22 @@ class Town extends Component {
                 case 'TR': // Tree Image Border
                     source = Tree
                     break;
+                case 'PT': // Pathway grass
+                    source = Grass;
+                    break;
+                case 'TG': //Tall Grass
+                    source = TallGrass;
+                    break;
+                case 'WT':
+                    source = Water;
+                    break;
                 default:
                     break;
             }
             // Locates player on town map
             if (rowIndex === this.props.rowPos && colIndex === this.props.colPos) {
                 tileType = 'Player';
+                source = Player;
             }
             if (source) {
                 return (
