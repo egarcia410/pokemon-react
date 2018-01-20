@@ -118,6 +118,12 @@ const reducer = (state = initialState, action) => {
                 items,
                 money
             }
+        case actionTypes.REMOVE_POKEMON:
+            pokemon.splice(action.index, 1);
+            return {
+                ...state,
+                pokemon
+            }
         default: 
             return state
     }

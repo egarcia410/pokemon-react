@@ -66,3 +66,11 @@ export const buyItem = (item, price) => {
         price: price
     };
 };
+
+export const removePokemon = (index) => {
+    console.log('Inside actions', index);
+    return {
+        type: actionTypes.REMOVE_POKEMON,
+        index: index
+    };
+};

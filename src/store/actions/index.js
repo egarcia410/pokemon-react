@@ -10,6 +10,7 @@ export {
     revivePokemon,
     resetActivePokemon,
     buyItem,
+    removePokemon,
 } from './player';
 
 // Opponent

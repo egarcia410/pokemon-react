@@ -184,7 +184,6 @@ class Town extends Component {
     };
 
     displayPokemonList() {
-        console.log('Pokemon inventory')
         this.props.history.replace('/pokemon');
 
     };
