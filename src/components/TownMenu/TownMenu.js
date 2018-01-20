@@ -17,13 +17,11 @@ class TownMenu extends Component {
         if (this.props.isBagOpen) {
             menu = (
                 <div className="col-12 townMenu">
-                    <button onClick={() => this.props.pokemonList()} className="col">POKeMON</button>
-                    <button onClick={() => this.props.itemsList()} className="col">BAG</button>
+                    <button onClick={() => this.props.closeBag()} className="col">CLOSE BAG</button>
                 </div>
             )
         }
         if (this.props.isStoreOpen) {
-
             menu = (
                 <div className="col-12 townMenu">
                     <button name="Health" onClick={(e) => this.props.buyItem(e)} className="col">Health</button>

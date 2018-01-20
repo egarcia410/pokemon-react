@@ -190,10 +190,10 @@ class Town extends Component {
     };
 
     displayItemsList() {
-        console.log('Item inventory')
-        // this.setState({
-        //     isBagOpen: !isBagOpen
-        // })
+        this.setState({
+            isBagOpen: true,
+            message: `Health X ${this.props.playerItems[0]['Health']} PokeBall X ${this.props.playerItems[1]['PokeBall']}`
+        })
     };
     
     buyItem(e) {
@@ -223,7 +223,14 @@ class Town extends Component {
                 }
                 break;
             default: return;
-        }
+        };
+    };
+
+    closeBag() {
+        this.setState({
+            isBagOpen: false,
+            message: 'PALLET TOWN'
+        })
     }
 
 
@@ -237,6 +244,7 @@ class Town extends Component {
                 </div>
                 <TownMenu
                     isStoreOpen={this.state.isStoreOpen}
+                    closeBag={() => this.closeBag()}
                     isBagOpen={this.state.isBagOpen}
                     buyItem={(e) => this.buyItem(e)}
                     pokemonList={() => this.displayPokemonList()} 
@@ -253,6 +261,7 @@ const mapStateToProps = state => {
         rowPos: state.town.rowPos,
         colPos: state.town.colPos,
         playerPokemon: state.player.pokemon,
+        playerItems: state.player.items,
         playerMoney: state.player.money
     };
 };
