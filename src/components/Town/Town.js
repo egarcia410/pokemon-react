@@ -25,6 +25,9 @@ class Town extends Component {
     };
 
     componentWillMount() {
+        if (this.props.playerPokemon.length === 0) {
+            this.props.history.replace('/');
+        }
         document.addEventListener("keydown", this.action);
     };
 

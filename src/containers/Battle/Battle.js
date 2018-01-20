@@ -11,33 +11,46 @@ import './Battle.css';
 
 class Battle extends Component {
 
+    componentWillMount() {
+        if (this.props.playerPokemon.length === 0) {
+            this.props.history.replace('/');
+        };
+    }
+
     componentWillUnmount() {
         this.props.resetOpponent();
         this.props.resetActivePokemon();
     };
 
     render() {
-        return (
-            <div className="container-fluid">
-                <div className="battleArena">
-                    {/* Opponent */}
+        if (this.props.playerPokemon.length !== 0) {
+            console.log('Inside render')
+            return (
+                <div className="container-fluid">
+                    <div className="battleArena">
+                        {/* Opponent */}
+                        <div className="row">
+                            <StatusMenu/>
+                            <Pokemon/>
+                        </div>
+                        {/* User */}
+                        <div className="row" style={{alignItems: 'flex-end'}}>
+                            <Pokemon isUser={true}/>
+                            <StatusMenu isUser={true}/>
+                        </div>
+                    </div>
+                    {/* Prompt & Actions */}
                     <div className="row">
-                        <StatusMenu/>
-                        <Pokemon/>
-                    </div>
-                    {/* User */}
-                    <div className="row" style={{alignItems: 'flex-end'}}>
-                        <Pokemon isUser={true}/>
-                        <StatusMenu isUser={true}/>
+                        <Prompt/>
+                        <ActionMenu history={this.props.history}/>
                     </div>
                 </div>
-                {/* Prompt & Actions */}
-                <div className="row">
-                    <Prompt/>
-                    <ActionMenu history={this.props.history}/>
-                </div>
-            </div>
-        )
+            )
+        } else {
+            return (
+                <h1>You will be redirected inorder to select starting pokemon!</h1>
+            )
+        }
     }
 }
 
