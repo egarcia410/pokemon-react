@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import * as actions from '../../store/actions/index';
 import Pokemon from '../../entities/Pokemon';
 import PokemonService from '../../services/PokemonService';
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 
 import './StarterPokemon.css';
 

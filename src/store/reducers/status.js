@@ -26,6 +26,11 @@ const reducer = (state = initialState, action) => {
                 activeTurn: false,
                 promptMessage: "Can't Escape!"
             });
+        case actionTypes.INIT_GYM_BATTLE:
+            return {
+                ...state,
+                gymBattle: action.bool
+            };
         default: return state;
     }
 };

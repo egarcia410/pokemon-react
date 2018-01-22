@@ -4,7 +4,19 @@ import _ from 'lodash';
 
 const initialState = {
     pokemon: [],
-    activePokemon: 0
+    activePokemon: 0,
+    gymLeaderNames: ['Brock', 'Misty', 'Lt. Surge', 'Erika', 'Koga', 'Sabrina', 'Blaine', 'Giovanni'],
+    gymLeaderPokemon: [
+        [74, 95],
+        [120, 121],
+        [100, 25, 26],
+        [71, 114, 45],
+        [109, 109, 89, 110],
+        [64, 122, 49, 65],
+        [58, 77, 78, 59],
+        [111, 51, 31, 34, 112],    
+    ],
+    activeGymLeader: 0
 };
 
 const reducer = (state = initialState, action) => {

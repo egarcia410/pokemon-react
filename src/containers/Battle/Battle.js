@@ -24,7 +24,6 @@ class Battle extends Component {
 
     render() {
         if (this.props.playerPokemon.length !== 0) {
-            console.log('Inside render')
             return (
                 <div className="container-fluid">
                     <div className="battleArena">

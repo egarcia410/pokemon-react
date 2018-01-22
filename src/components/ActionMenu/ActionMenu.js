@@ -100,14 +100,12 @@ class ActionMenu extends Component {
         setTimeout(() =>{
             // Check your pokemon died
             if (this.props.playerPokemon[this.props.activePlayerPokemon].currentHealth === 0) {
-                console.log('POKEMON DIED')
                 let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
-                let message = `${name.toUpperCase()} Died!`;
+                let message = `${name.toUpperCase()} Fainted!`;
                 this.props.updatePromptMessage(message);
                 // Checks if there are more pokemon in player inventory
                 if (this.props.activePlayerPokemon < this.props.playerPokemon.length - 1) {
                     // Changes player pokemon
-                    console.log('SWITCHING POKEMON')
                     this.props.updateActivePokemon();
                     setTimeout(() => {
                         let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
@@ -115,7 +113,6 @@ class ActionMenu extends Component {
                         this.props.updatePromptMessage(message);
                     }, 2000)
                 } else {
-                    console.log("REVIVE POKEMON")
                     // Revive pokemon and return to town
                     this.props.revivePokemon();
                     setTimeout(() => {
@@ -153,7 +150,7 @@ class ActionMenu extends Component {
             this.props.escapeBattle(true);
             setTimeout(() => {
                 this.props.history.push('/town');
-            }, 2000)
+            }, 1000)
         } else { 
             // Escaped Failed
             this.props.escapeBattle(false);

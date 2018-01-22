@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actions from '../../store/actions/index';
+import { setTimeout } from 'timers';
 
 class Items extends Component {
 
@@ -33,7 +34,14 @@ class Items extends Component {
                 break;
             case 'PokeBall':
                 // Limit pokemon can have to 6 or in gym battle
-                if (this.props.playerPokemon.length === 6 || this.props.gymBattle) {
+                if (this.props.gymBattle) {
+                    let message = `Unable to use PokeBall in Gym Battle!`;
+                    this.props.updatePromptMessage(message);
+                    setTimeout(() => {
+                        let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
+                        let message = `What will ${name.toUpperCase()} do!`;
+                        this.props.updatePromptMessage(message);
+                    }, 1500)
                     return;
                 };
                 // Check if pokeball exists

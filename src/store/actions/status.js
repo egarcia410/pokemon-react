@@ -20,3 +20,10 @@ export const escapeBattle = (status) => {
         escapedStatus: status
     };
 };
+
+export const initGymBattle = (bool) => {
+    return {
+        type: actionTypes.INIT_GYM_BATTLE,
+        bool: bool
+    };
+};

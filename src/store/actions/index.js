@@ -31,4 +31,5 @@ export {
     updateActiveStatus,
     updatePromptMessage,
     escapeBattle,
+    initGymBattle
 } from './status';

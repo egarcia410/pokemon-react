@@ -6,6 +6,7 @@ import PokemonService from '../../services/PokemonService';
 import Pokemon from '../../entities/Pokemon';
 import TownMenu from '../TownMenu/TownMenu';
 import _ from 'lodash';
+import swal from 'sweetalert2';
 
 import Tree from '../../images/town/tree1.png';
 import Player from '../../images/town/player.jpg';
@@ -13,6 +14,9 @@ import Grass from '../../images/town/grass.png';
 import TallGrass from '../../images/town/tallGrass.png';
 import Water from '../../images/town/water.png';
 import PokeDollar from '../../images/town/pokedollar.png';
+
+// Gym Leaders/Badges Images
+import Brock from '../../images/gym/Brock.png';
 
 import './Town.css';
 
@@ -22,6 +26,7 @@ class Town extends Component {
         message: 'PALLET TOWN',
         isBagOpen: false,
         isStoreOpen: false,
+
     };
 
     componentWillMount() {
@@ -90,7 +95,56 @@ class Town extends Component {
         }
         // Enter Gym
         if (tile === 'GL') {
-            console.log('Gym Leader')
+            let gymLeaderImage = this.getGymLeaderImage();
+            let gymLeaderName = this.props.gymLeaderNames[this.props.activeGymLeader];
+            swal({
+                title: `${gymLeaderName.toUpperCase()}`,
+                text: `Are you ready to fight ${gymLeaderName}!?`,
+                imageUrl: gymLeaderImage,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Gym Leader',              
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Let\'s Fight!',
+                cancelButtonText: 'No, Not Yet!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    let gymLeaderPokemon = this.props.gymLeaderPokemon[this.props.activeGymLeader];
+                    // Initialize Gym Battle, create Pokemon!
+                    for (let i = 0; i < gymLeaderPokemon.length; i++) {
+                        let id = gymLeaderPokemon[i];
+                        PokemonService.getPokemonById(id)
+                            .then(result => {
+                                // Create enemy pokemon instance
+                                let pokemon = new Pokemon(
+                                    result.data[0].id,
+                                    result.data[0].name,
+                                    result.data[0].type,
+                                    Math.round(this.props.playerPokemon[0].maxHealth * (1.3 + i)),
+                                    Math.round(this.props.playerPokemon[0].maxHealth * (1.3 + i)),
+                                    Math.round(this.props.playerPokemon[0].attackDamage * (1.2 + i)),
+                                    result.data[0].attackName,
+                                    Math.round(this.props.playerPokemon[0].level * (1.2 + i)),
+                                    result.data[0].evolves,
+                                )
+                                this.props.addOppPokemon(pokemon);
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            })
+                    };
+                    this.props.initGymBattle(true);
+                    setTimeout(() => {
+                        this.props.history.replace('/battle');
+                    }, 1000);
+                };
+            })
         }
         // Walking around in tall grass
         if (tile === 'TG') {
@@ -232,9 +286,17 @@ class Town extends Component {
         this.setState({
             isBagOpen: false,
             message: 'PALLET TOWN'
-        })
-    }
+        });
+    };
 
+    getGymLeaderImage() {
+        let gymLeader = this.props.gymLeaderNames[this.props.activeGymLeader];
+        switch (gymLeader) {
+            case 'Brock':
+                return Brock;
+            default: return;
+        }
+    };
 
     render() {
         return (
@@ -264,7 +326,10 @@ const mapStateToProps = state => {
         colPos: state.town.colPos,
         playerPokemon: state.player.pokemon,
         playerItems: state.player.items,
-        playerMoney: state.player.money
+        playerMoney: state.player.money,
+        activeGymLeader: state.opponent.activeGymLeader,
+        gymLeaderNames: state.opponent.gymLeaderNames,
+        gymLeaderPokemon: state.opponent.gymLeaderPokemon
     };
 };
 
@@ -273,6 +338,7 @@ const mapDispatchToProps = dispatch => {
         updatePlayerPosition: (row, col) => dispatch(actions.updatePlayerPosition(row, col)),
         addOppPokemon: (pokemon) => dispatch(actions.addOppPokemon(pokemon)),
         buyItem: (item, price) => dispatch(actions.buyItem(item, price)),
+        initGymBattle: (bool) => dispatch(actions.initGymBattle(bool)),
     };
 };
 
