@@ -11,6 +11,7 @@ export {
     resetActivePokemon,
     buyItem,
     removePokemon,
+    updatePlayerBadge
 } from './player';
 
 // Opponent
@@ -19,6 +20,7 @@ export {
     reduceOppHealth,
     resetOpponent,
     switchOppPokemon,
+    updateActiveGymLeader,
 } from './opponent';
 
 // Town

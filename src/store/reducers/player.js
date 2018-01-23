@@ -14,6 +14,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     var pokemon = _.cloneDeep(state.pokemon);
     var items = _.cloneDeep(state.items);
+    var money = state.money;
     if (pokemon[state.activePokemon]) {
         var health = pokemon[state.activePokemon].currentHealth;
     }
@@ -63,9 +64,11 @@ const reducer = (state = initialState, action) => {
                     p.xp += 1;
                 };
             });
+            money = this.state.money += action.money;
             return {
                 ...state,
-                pokemon
+                pokemon,
+                money
             }
         case actionTypes.POKEMON_EVOLVED:
             pokemon.forEach((p, index) => {
@@ -107,7 +110,7 @@ const reducer = (state = initialState, action) => {
             }
         case actionTypes.BUY_ITEM:
             let reducedMoney = state.money - action.price;
-            let money = reducedMoney;
+            money = reducedMoney;
             items.forEach((item, index) => {
                 if (item[action.item]) {
                     item[action.item] += 1;
@@ -123,6 +126,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 pokemon
+            }
+        case actionTypes.UPDATE_PLAYER_BADGE:
+            let badges = state.badges.push(action.badge);
+            return {
+                ...state,
+                badges
             }
         default: 
             return state

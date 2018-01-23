@@ -7,6 +7,7 @@ const initialState = {
     activePokemon: 0,
     activeTown: ['Pewter City', 'Cerulean City', 'Vermillion City', 'Celadon City', 'Fuchsia City', 'Saffron City', 'Cinnabar Island', 'Viridian City'],
     gymLeaderNames: ['Brock', 'Misty', 'Lt. Surge', 'Erika', 'Koga', 'Sabrina', 'Blaine', 'Giovanni'],
+    gymBadges: ['Boulder', 'Cascade', 'Thunder', 'Rainbow', 'Soul', 'Marsh', 'Volcano', 'Earth'],
     gymLeaderPokemon: [
         [74, 95],
         [120, 121],

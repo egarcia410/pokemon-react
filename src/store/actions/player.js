@@ -28,9 +28,10 @@ export const increaseHealth = () => {
     };
 };
 
-export const gainExperience = () => {
+export const gainExperience = (money) => {
     return {
-        type: actionTypes.GAIN_EXPERIENCE
+        type: actionTypes.GAIN_EXPERIENCE,
+        money: money
     };
 };
 
@@ -71,5 +72,12 @@ export const removePokemon = (index) => {
     return {
         type: actionTypes.REMOVE_POKEMON,
         index: index
+    };
+};
+
+export const updatePlayerBadge = (badge) => {
+    return {
+        type: actionTypes.UPDATE_PLAYER_BADGE,
+        badge: badge
     };
 };

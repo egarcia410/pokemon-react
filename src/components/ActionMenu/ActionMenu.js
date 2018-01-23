@@ -37,18 +37,25 @@ class ActionMenu extends Component {
                                 this.props.updateActiveStatus(true);  
                             }, 3000);
                         } else {
-                            if (this.props.gymBattle) {
-                                // 
-                            }
                             // All opponent pokemon are dead!
+                            // Reward player with money earnings
+                            let money = 150;
+                            if (this.props.gymBattle) {
+                                money = 1000;
+                                let badge = this.props.gymBadges[this.props.activeGymLeader];
+                                // Add Defeated gym leader badge to player inventory
+                                this.props.updatePlayerBadge(badge);
+                                // Update active gym leader
+                                this.props.updateActiveGymLeader();
+                            }
                             let message = `${this.props.oppPokemon[0].name.toUpperCase()} has fainted!`
                             this.props.updatePromptMessage(message);
                             setTimeout(() => {
                                 let message = `You Won!`
                                 this.props.updatePromptMessage(message);
                             }, 3000);
-                            // Player pokemon gain experience
-                            this.props.gainExperience();
+                            // Player pokemon gain experience and money
+                            this.props.gainExperience(money);
                             // Display message of pokemon gaining experience
                             setTimeout(() => {
                                 let message = `Your Pokemon have gained experience!`
@@ -228,6 +235,8 @@ const mapStateToProps = state => {
         opp: state.opponent,
         status: state.status,
         gymBattle: state.opponent.gymBattle,
+        gymBadges: state.opponent.gymBadges,
+        activeGymLeader: state.opponent.activeGymLeader
     };
 };
 
@@ -239,12 +248,13 @@ const mapDispatchToProps = dispatch => {
         updatePromptMessage: (msg) => dispatch(actions.updatePromptMessage(msg)),
         escapeBattle: (status) => dispatch(actions.escapeBattle(status)),
         switchOppPokemon: () => dispatch(actions.switchOppPokemon()),
-        gainExperience: () => dispatch(actions.gainExperience()),
+        gainExperience: (money) => dispatch(actions.gainExperience(money)),
         pokemonEvolved: (responses) => dispatch(actions.pokemonEvolved(responses)),
         updateActivePokemon: () => dispatch(actions.updateActivePokemon()),
         revivePokemon: () => dispatch(actions.revivePokemon()),
+        updatePlayerBadge: (badge) => dispatch(actions.updatePlayerBadge(badge)),
+        updateActiveGymLeader: () => dispatch(actions.updateActiveGymLeader()),
     };                               
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActionMenu);

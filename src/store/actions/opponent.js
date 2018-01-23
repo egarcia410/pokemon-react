@@ -25,3 +25,9 @@ export const switchOppPokemon = () => {
         type: actionTypes.SWITCH_OPP_POKEMON
     };
 };
+
+export const updateActiveGymLeader = () => {
+    return {
+        type: actionTypes.UPDATE_ACTIVE_GYM_LEADER
+    };
+};
