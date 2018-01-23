@@ -37,6 +37,9 @@ class ActionMenu extends Component {
                                 this.props.updateActiveStatus(true);  
                             }, 3000);
                         } else {
+                            if (this.props.gymBattle) {
+                                // 
+                            }
                             // All opponent pokemon are dead!
                             let message = `${this.props.oppPokemon[0].name.toUpperCase()} has fainted!`
                             this.props.updatePromptMessage(message);
@@ -223,7 +226,8 @@ const mapStateToProps = state => {
         activeOppPokemon: state.opponent.activePokemon,
         oppPokemon: state.opponent.pokemon,
         opp: state.opponent,
-        status: state.status
+        status: state.status,
+        gymBattle: state.opponent.gymBattle,
     };
 };
 

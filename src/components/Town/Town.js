@@ -17,13 +17,20 @@ import PokeDollar from '../../images/town/pokedollar.png';
 
 // Gym Leaders/Badges Images
 import Brock from '../../images/gym/Brock.png';
+import Misty from '../../images/gym/Misty.png';
+import LtSurge from '../../images/gym/LtSurge.png';
+import Erika from '../../images/gym/Erika.png';
+import Koga from '../../images/gym/Koga.png';
+import Sabrina from '../../images/gym/Sabrina.png';
+import Blaine from '../../images/gym/Blaine.png';
+import Giovanni from '../../images/gym/Giovanni.png';
 
 import './Town.css';
 
 class Town extends Component {
 
     state = {
-        message: 'PALLET TOWN',
+        message: this.props.activeTown[this.props.activeGymLeader].toUpperCase(),
         isBagOpen: false,
         isStoreOpen: false,
 
@@ -81,17 +88,16 @@ class Town extends Component {
         if (this.state.isStoreOpen && tile !== 'ST') {
             // Reset message and menu
             this.setState({
-                message: 'PALLET TOWN',
+                message: this.props.activeTown[this.props.activeGymLeader].toUpperCase(),
                 isStoreOpen: false
             })
         }
         // Enter Store
         if (tile === 'ST') {
             this.setState({
-                message: 'What would you like to buy?',
+                message: 'WHAT WOULD YOU LIKE TO BUY?',
                 isStoreOpen: true
             })
-
         }
         // Enter Gym
         if (tile === 'GL') {
@@ -126,11 +132,11 @@ class Town extends Component {
                                     result.data[0].id,
                                     result.data[0].name,
                                     result.data[0].type,
-                                    Math.round(this.props.playerPokemon[0].maxHealth * (1.3 + i)),
-                                    Math.round(this.props.playerPokemon[0].maxHealth * (1.3 + i)),
-                                    Math.round(this.props.playerPokemon[0].attackDamage * (1.2 + i)),
+                                    Math.round(this.props.playerPokemon[0].maxHealth * (i+1)),
+                                    Math.round(this.props.playerPokemon[0].maxHealth * (i+1)),
+                                    Math.round(this.props.playerPokemon[0].attackDamage * (i+1)),
                                     result.data[0].attackName,
-                                    Math.round(this.props.playerPokemon[0].level * (1.2 + i)),
+                                    Math.round(this.props.playerPokemon[0].level * (i+1)),
                                     result.data[0].evolves,
                                 )
                                 this.props.addOppPokemon(pokemon);
@@ -294,6 +300,20 @@ class Town extends Component {
         switch (gymLeader) {
             case 'Brock':
                 return Brock;
+            case 'Misty':
+                return Misty;
+            case 'LtSurge':
+                return LtSurge;
+            case 'Erika':
+                return Erika;
+            case 'Koga':
+                return Koga;
+            case 'Sabrina':
+                return Sabrina;
+            case 'Blaine':
+                return Blaine;
+            case 'Giovanni':
+                return Giovanni;
             default: return;
         }
     };
@@ -329,7 +349,8 @@ const mapStateToProps = state => {
         playerMoney: state.player.money,
         activeGymLeader: state.opponent.activeGymLeader,
         gymLeaderNames: state.opponent.gymLeaderNames,
-        gymLeaderPokemon: state.opponent.gymLeaderPokemon
+        gymLeaderPokemon: state.opponent.gymLeaderPokemon,
+        activeTown: state.opponent.activeTown,
     };
 };
 

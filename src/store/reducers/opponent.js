@@ -5,6 +5,7 @@ import _ from 'lodash';
 const initialState = {
     pokemon: [],
     activePokemon: 0,
+    activeTown: ['Pewter City', 'Cerulean City', 'Vermillion City', 'Celadon City', 'Fuchsia City', 'Saffron City', 'Cinnabar Island', 'Viridian City'],
     gymLeaderNames: ['Brock', 'Misty', 'Lt. Surge', 'Erika', 'Koga', 'Sabrina', 'Blaine', 'Giovanni'],
     gymLeaderPokemon: [
         [74, 95],
@@ -42,8 +43,8 @@ const reducer = (state = initialState, action) => {
             };
         case actionTypes.RESET_OPPONENT:
             return {
+                ...state,
                 pokemon: [],
-                activePokemon: 0
             };
         case actionTypes.SWITCH_OPP_POKEMON:
             // Removes first pokemon obj in pokemon array
