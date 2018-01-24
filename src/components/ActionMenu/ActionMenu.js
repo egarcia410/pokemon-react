@@ -39,7 +39,7 @@ class ActionMenu extends Component {
                         } else {
                             // All opponent pokemon are dead!
                             // Reward player with money earnings
-                            let money = 150;
+                            var money = 150;
                             if (this.props.gymBattle) {
                                 money = 1000;
                                 let badge = this.props.gymBadges[this.props.activeGymLeader];
@@ -73,11 +73,11 @@ class ActionMenu extends Component {
                             }
                             Promise.all(promises)
                                 .then((responses) => {
-                                    this.props.pokemonEvolved(responses);
                                     setTimeout(() => {
-                                        this.props.revivePokemon();
-                                        this.props.updateActiveStatus(true);  
+                                        // this.props.revivePokemon();
+                                        // this.props.updateActiveStatus(true);  
                                         this.props.history.replace('/town');
+                                        this.props.pokemonEvolved(responses);
                                     }, 6000);
                                 });
                         };
@@ -85,7 +85,6 @@ class ActionMenu extends Component {
                         // Opponent pokemon is not dead
                         this.fight();
                     }
-                    
                 }, 1500);
                 break;
             case 'bag':
@@ -162,7 +161,9 @@ class ActionMenu extends Component {
         } else { 
             // Escaped Failed
             this.props.escapeBattle(false);
-            this.fight();
+            setTimeout(() => {
+                this.fight();
+            }, 1000);
         };
     };
 

@@ -64,7 +64,7 @@ const reducer = (state = initialState, action) => {
                     p.xp += 1;
                 };
             });
-            money = this.state.money + action.money;
+            money = state.money + action.money;
             return {
                 ...state,
                 pokemon,

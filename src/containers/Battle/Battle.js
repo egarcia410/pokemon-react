@@ -20,6 +20,8 @@ class Battle extends Component {
     componentWillUnmount() {
         this.props.resetOpponent();
         this.props.resetActivePokemon();
+        this.props.revivePokemon();
+        this.props.updateActiveStatus(true); 
     };
 
     render() {
@@ -66,6 +68,8 @@ const mapDispatchToProps = dispatch => {
     return {
         resetOpponent: () => dispatch(actions.resetOpponent()),
         resetActivePokemon: () => dispatch(actions.resetActivePokemon()),
+        revivePokemon: () => dispatch(actions.revivePokemon()),
+        updateActiveStatus: (status) => dispatch(actions.updateActiveStatus(status))
     };
 };
 
