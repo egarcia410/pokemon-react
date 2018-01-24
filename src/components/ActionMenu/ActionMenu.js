@@ -35,7 +35,7 @@ class ActionMenu extends Component {
                                 let message = `${this.props.oppPokemon[this.props.activeOppPokemon].name.toUpperCase()} has entered the fight!`
                                 this.props.updatePromptMessage(message);
                                 this.props.updateActiveStatus(true);  
-                            }, 3000);
+                            }, 1500);
                         } else {
                             // All opponent pokemon are dead!
                             // Reward player with money earnings
@@ -53,14 +53,14 @@ class ActionMenu extends Component {
                             setTimeout(() => {
                                 let message = `You Won!`
                                 this.props.updatePromptMessage(message);
-                            }, 3000);
+                            }, 1500);
                             // Player pokemon gain experience and money
                             this.props.gainExperience(money);
                             // Display message of pokemon gaining experience
                             setTimeout(() => {
                                 let message = `Your Pokemon have gained experience!`
                                 this.props.updatePromptMessage(message);
-                            }, 6000);
+                            }, 3000);
                             // Check if pokemon evolved
                             var promises = [];
                             for (var i=0; i < this.props.playerPokemon.length; i++){
@@ -78,7 +78,7 @@ class ActionMenu extends Component {
                                         this.props.revivePokemon();
                                         this.props.updateActiveStatus(true);  
                                         this.props.history.replace('/town');
-                                    }, 9000);
+                                    }, 6000);
                                 });
                         };
                     } else {
@@ -86,7 +86,7 @@ class ActionMenu extends Component {
                         this.fight();
                     }
                     
-                }, 2000);
+                }, 1500);
                 break;
             case 'bag':
                 this.toggleBagInventory();
@@ -104,9 +104,7 @@ class ActionMenu extends Component {
 
     fight() {
         // Opponent attacks User
-        setTimeout(() => {
-            this.attack(this.props.playerPokemon[this.props.activePlayerPokemon], this.props.oppPokemon[this.props.activeOppPokemon])
-        }, 2000);
+        this.attack(this.props.playerPokemon[this.props.activePlayerPokemon], this.props.oppPokemon[this.props.activeOppPokemon])
         setTimeout(() =>{
             // Check your pokemon died
             if (this.props.playerPokemon[this.props.activePlayerPokemon].currentHealth === 0) {
@@ -121,24 +119,24 @@ class ActionMenu extends Component {
                         let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
                         let message = `Go ${name.toUpperCase()}!`;
                         this.props.updatePromptMessage(message);
-                    }, 2000)
+                    }, 1500)
                 } else {
                     // Revive pokemon and return to town
                     this.props.revivePokemon();
                     setTimeout(() => {
                         this.props.updateActiveStatus(true);
                         this.props.history.replace('/town');
-                    }, 2000);
+                    }, 1000);
                 };
             };
-        }, 3000)
+        }, 1500)
         // Reset player prompt, active turn set to true
         setTimeout(() => {
             let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
             let message = `What will ${name.toUpperCase()} do!`;
             this.props.updatePromptMessage(message);
             this.props.updateActiveStatus(true);
-        }, 9000);
+        }, 4000);
     }
 
     attack(attacked, attacker) {

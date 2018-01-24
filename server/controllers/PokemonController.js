@@ -15,7 +15,6 @@ module.exports = {
     getPokemonByRarity(req, res) {
         knex('pokemons').where('rarity', req.params.rarity)
             .then(result => {
-                console.log(result)
                 return res.send(result);
             })
             .catch(error => {
