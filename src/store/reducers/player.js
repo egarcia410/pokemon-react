@@ -5,7 +5,7 @@ import _ from 'lodash';
 const initialState = {
     pokemon: [],
     pokemonInventory: [],
-    items: [{'Health': 10}, {'PokeBall': 3}],
+    items: [{'Health': 10}, {'PokeBall': 10}],
     badges: [],
     money: 300,
     activePokemon: 0
@@ -112,7 +112,7 @@ const reducer = (state = initialState, action) => {
             let reducedMoney = state.money - action.price;
             money = reducedMoney;
             items.forEach((item, index) => {
-                if (item[action.item]) {
+                if (item[action.item] || item[action.item] === 0) {
                     item[action.item] += 1;
                 };
             });

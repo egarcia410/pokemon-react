@@ -28,12 +28,12 @@ class Items extends Component {
                         this.props.updatePromptMessage(message);
                         setTimeout(() => {
                             this.props.fight();
-                        }, 3000);
+                        }, 1500);
                     };
                 };
                 break;
             case 'PokeBall':
-                // Limit pokemon can have to 6 or in gym battle
+                // Can't use pokeballs in a Gym Battle
                 if (this.props.gymBattle) {
                     let message = `Unable to use PokeBall in Gym Battle!`;
                     this.props.updatePromptMessage(message);
@@ -67,11 +67,10 @@ class Items extends Component {
                             // Display successful capture messsage
                             let message = `Gotcha! ${this.props.oppPokemon[this.props.activeOppPokemon].name.toUpperCase()} was caught!`;
                             this.props.updatePromptMessage(message);
-                            this.props.updateActiveStatus(true);
                             // return to town
                             setTimeout(() => {
                                 this.props.history.replace('/town');
-                            }, 3000);
+                            }, 2000);
                         } else {
                             // Unsuccessful capture of pokemon
                             // Display message
@@ -80,7 +79,7 @@ class Items extends Component {
                             // Opponent's turn to attack
                             setTimeout(() => {
                                 this.props.fight();
-                            }, 3000);
+                            }, 2000);
                         };
                     };
                 };

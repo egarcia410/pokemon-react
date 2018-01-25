@@ -74,8 +74,6 @@ class ActionMenu extends Component {
                             Promise.all(promises)
                                 .then((responses) => {
                                     setTimeout(() => {
-                                        // this.props.revivePokemon();
-                                        // this.props.updateActiveStatus(true);  
                                         this.props.history.replace('/town');
                                         this.props.pokemonEvolved(responses);
                                     }, 6000);
@@ -135,7 +133,7 @@ class ActionMenu extends Component {
             let message = `What will ${name.toUpperCase()} do!`;
             this.props.updatePromptMessage(message);
             this.props.updateActiveStatus(true);
-        }, 4000);
+        }, 3500);
     }
 
     attack(attacked, attacker) {
@@ -233,7 +231,7 @@ const mapStateToProps = state => {
         oppPokemon: state.opponent.pokemon,
         opp: state.opponent,
         status: state.status,
-        gymBattle: state.opponent.gymBattle,
+        gymBattle: state.status.gymBattle,
         gymBadges: state.opponent.gymBadges,
         activeGymLeader: state.opponent.activeGymLeader
     };
