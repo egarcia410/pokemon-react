@@ -128,7 +128,10 @@ const reducer = (state = initialState, action) => {
                 pokemon
             }
         case actionTypes.UPDATE_PLAYER_BADGE:
-            let badges = state.badges.push(action.badge);
+            console.log(action.badge, 'BADGE REDUCER');
+            let badges = state.badges;
+            badges.push(action.badge);
+            console.log(badges, 'BADGE REDUCER AFTER PUSH')
             return {
                 ...state,
                 badges

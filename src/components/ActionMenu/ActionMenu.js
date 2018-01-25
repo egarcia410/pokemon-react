@@ -36,6 +36,11 @@ class ActionMenu extends Component {
                                 this.props.updatePromptMessage(message);
                                 this.props.updateActiveStatus(true);  
                             }, 1500);
+                            setTimeout(() => {
+                                let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
+                                let message = `What will ${name.toUpperCase()} do!`;
+                                this.props.updatePromptMessage(message);
+                            }, 1500);
                         } else {
                             // All opponent pokemon are dead!
                             // Reward player with money earnings
@@ -43,6 +48,9 @@ class ActionMenu extends Component {
                             if (this.props.gymBattle) {
                                 money = 1000;
                                 let badge = this.props.gymBadges[this.props.activeGymLeader];
+                                console.log(badge, 'BADGE');
+                                console.log(this.props.gymBadges, 'GYM BADGES');
+                                console.log(this.props.activeGymLeader, 'ACTIVE GYM LEADER');
                                 // Add Defeated gym leader badge to player inventory
                                 this.props.updatePlayerBadge(badge);
                                 // Update active gym leader

@@ -25,7 +25,6 @@ module.exports = {
     getPokemonById(req, res) {
         knex('pokemons').where('id', req.params.id)
             .then(result => {
-                console.log(result)
                 return res.send(result);
             })
             .catch(error => {

@@ -54,6 +54,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 pokemon
             }
+        case actionTypes.UPDATE_ACTIVE_GYM_LEADER:
+            let activeGymLeader = state.activeGymLeader + 1;
+            return {
+                ...state,
+                activeGymLeader
+            }
         default:
             return state;
     }
