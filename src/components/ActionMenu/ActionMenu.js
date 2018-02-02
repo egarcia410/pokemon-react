@@ -38,7 +38,7 @@ class ActionMenu extends Component {
                             }, 1500);
                             setTimeout(() => {
                                 let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
-                                let message = `What will ${name.toUpperCase()} do!`;
+                                let message = `What will ${name.toUpperCase()} do?`;
                                 this.props.updatePromptMessage(message);
                             }, 3000);
                         } else {
@@ -135,7 +135,7 @@ class ActionMenu extends Component {
         // Reset player prompt, active turn set to true
         setTimeout(() => {
             let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
-            let message = `What will ${name.toUpperCase()} do!`;
+            let message = `What will ${name.toUpperCase()} do?`;
             this.props.updatePromptMessage(message);
             this.props.updateActiveStatus(true);
         }, 3500);

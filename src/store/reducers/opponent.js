@@ -5,7 +5,7 @@ import _ from 'lodash';
 const initialState = {
     pokemon: [],
     activePokemon: 0,
-    activeTown: ['Pewter City', 'Cerulean City', 'Vermillion City', 'Celadon City', 'Fuchsia City', 'Saffron City', 'Cinnabar Island', 'Viridian City'],
+    activeTown: ['Pewter City', 'Cerulean City', 'Vermillion City', 'Celadon City', 'Fuchsia City', 'Saffron City', 'Cinnabar Island', 'Viridian City', 'Pallet Town'],
     gymLeaderNames: ['Brock', 'Misty', 'Lt. Surge', 'Erika', 'Koga', 'Sabrina', 'Blaine', 'Giovanni'],
     gymBadges: ['Boulder', 'Cascade', 'Thunder', 'Rainbow', 'Soul', 'Marsh', 'Volcano', 'Earth'],
     gymLeaderPokemon: [

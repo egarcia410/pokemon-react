@@ -15,7 +15,7 @@ import TallGrass from '../../images/town/tallGrass.png';
 import Water from '../../images/town/water.png';
 import PokeDollar from '../../images/town/pokedollar.png';
 
-// Gym Leaders/Badges Images
+// Gym Leaders
 import Brock from '../../images/gym/Brock.png';
 import Misty from '../../images/gym/Misty.png';
 import LtSurge from '../../images/gym/LtSurge.png';
@@ -25,6 +25,17 @@ import Sabrina from '../../images/gym/Sabrina.png';
 import Blaine from '../../images/gym/Blaine.png';
 import Giovanni from '../../images/gym/Giovanni.png';
 
+// Gym Badges
+import Boulder from '../../images/gym/Boulder_Badge.png';
+import Cascade from '../../images/gym/Cascade_Badge.png';
+import Thunder from '../../images/gym/Thunder_Badge.png';
+import Rainbow from '../../images/gym/Rainbow_Badge.png';
+import Soul from '../../images/gym/Soul_Badge.png';
+import Marsh from '../../images/gym/Marsh_Badge.png';
+import Volcano from '../../images/gym/Volcano_Badge.png';
+import Earth from '../../images/gym/Earth_Badge.png';
+
+// Main style for town
 import './Town.css';
 
 class Town extends Component {
@@ -103,6 +114,18 @@ class Town extends Component {
         if (tile === 'GL') {
             let gymLeaderImage = this.getGymLeaderImage();
             let gymLeaderName = this.props.gymLeaderNames[this.props.activeGymLeader];
+            let activeGymLeader = this.props.activeGymLeader;
+            
+            // Check if player has defeated all Gym Leaders!
+            if (activeGymLeader > 7) {
+                swal(
+                    'Good Job!',
+                    'You are a Pokemon Master!',
+                    'success'
+                )
+                return
+            }
+
             swal({
                 title: `${gymLeaderName.toUpperCase()}`,
                 text: `Are you ready to fight ${gymLeaderName}!?`,
@@ -170,9 +193,51 @@ class Town extends Component {
             };
             if (rarity) {
                 // Find pokemon from database
-                PokemonService.getPokemonByRarity(rarity)
+                PokemonService.getPokemonByRarityAndLand(rarity)
                     .then(result => {
-                        // Select random pokemon from rarity list
+                        // Select random pokemon from rarity and land based list
+                        let randPokemon = _.sample(result.data);
+                        // Create enemy pokemon instance
+                        let pokemon = new Pokemon(
+                            randPokemon.id,
+                            randPokemon.name,
+                            randPokemon.type,
+                            Math.round(this.props.playerPokemon[0].maxHealth * 1.3),
+                            Math.round(this.props.playerPokemon[0].maxHealth * 1.3),
+                            Math.round(this.props.playerPokemon[0].attackDamage * 1.2),
+                            randPokemon.attackName,
+                            Math.round(this.props.playerPokemon[0].level * 1.2),
+                            randPokemon.evolves,
+                        )
+                        this.props.addOppPokemon(pokemon);
+                        this.props.history.replace('/battle');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            }
+        }
+        // Swimming around in water
+        if (tile === 'WT') {
+            let randomNum = Math.floor(Math.random() * 101);
+            let rarity = '';
+            // Common Pokemon Encountered
+            if (randomNum <= 30) {
+                rarity = 'common';
+            };
+            // Uncommon Pokemon Encounter
+            if (randomNum > 30 && randomNum <= 50) {
+                rarity = 'uncommon';
+            };
+            // Rare Pokemon Encounter
+            if (randomNum > 50 && randomNum <= 60) {
+                rarity = 'rare';
+            };
+            if (rarity) {
+                // Find pokemon from database
+                PokemonService.getPokemonByRarityAndWater(rarity)
+                    .then(result => {
+                        // Select random pokemon from rarity and land based list
                         let randPokemon = _.sample(result.data);
                         // Create enemy pokemon instance
                         let pokemon = new Pokemon(
@@ -259,33 +324,52 @@ class Town extends Component {
     };
     
     buyItem(e) {
-        switch (e.target.name) {
-            case 'Health':
-                if (this.props.playerMoney < 100) {
-                    this.setState({
-                        message: 'Unable to afford item!'
-                    })
-                } else {
-                    this.setState({
-                        message: `You bought a ${e.target.name} Potion`
-                    })
-                    this.props.buyItem(e.target.name, 100);
-                }
-            break;
-            case 'PokeBall':
-                if (this.props.playerMoney < 150) {
-                    this.setState({
-                        message: 'Unable to afford item!'
-                    })
-                } else {
-                    this.setState({
-                        message: `You bought a ${e.target.name}`
-                    })
-                    this.props.buyItem(e.target.name, 150);
-                }
-                break;
-            default: return;
+        var item  = e.target.name;
+        let price = 0;
+        if (item === 'Health') {
+            price = 100;
+        } else {
+            price = 150;
         };
+        swal({
+            title: 'Are you sure?',
+            text: `You will buy ${item} for ${price}`,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, buy item!'
+        }).then((result) => {
+            if (result.value) {
+                switch (item) {
+                    case 'Health':
+                        if (this.props.playerMoney < 100) {
+                            this.setState({
+                                message: 'Unable to afford item!'
+                            })
+                        } else {
+                            this.setState({
+                                message: `You bought a ${item} Potion`
+                            })
+                            this.props.buyItem(item, 100);
+                        }
+                    break;
+                    case 'PokeBall':
+                        if (this.props.playerMoney < 150) {
+                            this.setState({
+                                message: 'Unable to afford item!'
+                            })
+                        } else {
+                            this.setState({
+                                message: `You bought a ${item}`
+                            })
+                            this.props.buyItem(item, 150);
+                        }
+                        break;
+                    default: return;
+                };
+            }
+        })
     };
 
     closeBag() {
@@ -297,12 +381,13 @@ class Town extends Component {
 
     getGymLeaderImage() {
         let gymLeader = this.props.gymLeaderNames[this.props.activeGymLeader];
+        console.log(gymLeader);
         switch (gymLeader) {
             case 'Brock':
                 return Brock;
             case 'Misty':
                 return Misty;
-            case 'LtSurge':
+            case 'Lt. Surge':
                 return LtSurge;
             case 'Erika':
                 return Erika;
@@ -318,11 +403,49 @@ class Town extends Component {
         }
     };
 
+    displayBadges = () => {
+        let badges = this.props.playerBadges;
+        return badges.map((badge, index) => {
+            let badgeImage = this.getBadgeImage(badge);
+            return (
+                <img key={index} className="badgeImg" src={badgeImage} alt={badge} />
+            )
+        })
+    }
+
+    getBadgeImage = (badge) => {
+        switch (badge) {
+            case 'Boulder':
+                return Boulder;
+            case 'Cascade':
+                return Cascade;
+            case 'Thunder':
+                return Thunder;
+            case 'Rainbow':
+                return Rainbow;
+            case 'Soul':
+                return Soul;
+            case 'Marsh':
+                return Marsh;
+            case 'Volcano':
+                return Volcano;
+            case 'Earth':
+                return Earth;
+            default: return;
+        }
+    }
+
     render() {
+        
         return (
             <div className="container townWrapper">
-                <img className="PokeDollar" src={PokeDollar} alt="PokeDollar"/>
-                {this.props.playerMoney}
+                <div className="col-12">
+                    <img className="PokeDollar" src={PokeDollar} alt="PokeDollar"/>
+                    {this.props.playerMoney}
+                </div>
+                <div className="col-12">
+                    {this.displayBadges()}
+                </div>
                 <div className="town">
                     {this.renderTown()}
                 </div>
@@ -351,6 +474,7 @@ const mapStateToProps = state => {
         gymLeaderNames: state.opponent.gymLeaderNames,
         gymLeaderPokemon: state.opponent.gymLeaderPokemon,
         activeTown: state.opponent.activeTown,
+        playerBadges: state.player.badges,
     };
 };
 

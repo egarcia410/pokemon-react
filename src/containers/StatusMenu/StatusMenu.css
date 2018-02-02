@@ -10,10 +10,12 @@
 
 .name {
     margin: 0;
+    font-size: 2rem;
 }
 
 .level {
     margin: 0;
+    font-size: 2rem;
 }
 
 .topStatusBar {
@@ -34,4 +36,8 @@
     border-radius: 5px;
     background-color: green;
     padding: 5px;
+}
+
+.type {
+    font-size: 2rem;
 }

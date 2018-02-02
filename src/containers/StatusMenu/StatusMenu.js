@@ -14,15 +14,24 @@ class StatusMenu extends Component {
         return percentageDecrease;
     }
 
+    pokemonType = () => {
+
+    }
+
     render() {
         if (this.props.isUser) {
             return (
                 <div className="statusBar col-12 col-md-4">
                     <div className="topStatusBar">
                         <div className="nameType">
-                            <h1 className="name">{this.props.playerPokemon[this.props.activePlayerPokemon].name} <span className="type">{this.props.playerPokemon[this.props.activePlayerPokemon].type}</span> </h1>
+                            <h1 className="name">{this.props.playerPokemon[this.props.activePlayerPokemon].name}</h1>
                         </div>
-                        <h2 className="level">Lv {this.props.playerPokemon[this.props.activePlayerPokemon].level}</h2>
+                        <div className="typeBox" style={this.pokemonType()}>
+                            <span className="type">{this.props.playerPokemon[this.props.activePlayerPokemon].type}</span> 
+                        </div>
+                        <div>
+                            <h2 className="level">Lv {this.props.playerPokemon[this.props.activePlayerPokemon].level}</h2>
+                        </div>
                     </div>
                     <div className="bottomStatusBar">
                         <div style={{ width: this.convertHealth(this.props.playerPokemon[this.props.activePlayerPokemon]) + '%' }} className="healthBar">HP {this.props.playerPokemon[this.props.activePlayerPokemon].currentHealth}</div>
@@ -34,9 +43,14 @@ class StatusMenu extends Component {
                 <div className="statusBar col-12 col-md-4">
                     <div className="topStatusBar">
                         <div className="nameType">
-                            <h1 className="name">{this.props.oppPokemon[this.props.activeOppPokemon].name} <span className="type">{this.props.oppPokemon[this.props.activeOppPokemon].type}</span> </h1>
+                            <h1 className="name">{this.props.oppPokemon[this.props.activeOppPokemon].name}</h1>
                         </div>
-                        <h2 className="level">Lv {this.props.oppPokemon[this.props.activeOppPokemon].level}</h2>
+                        <div className="typeBox">
+                            <span className="type">{this.props.oppPokemon[this.props.activeOppPokemon].type}</span> 
+                        </div>
+                        <div>
+                            <h2 className="level">Lv {this.props.oppPokemon[this.props.activeOppPokemon].level}</h2>
+                        </div>
                     </div>
                     <div className="bottomStatusBar">
                         <div style={{ width: this.convertHealth(this.props.oppPokemon[this.props.activeOppPokemon]) + '%' }} className="healthBar">HP {this.props.oppPokemon[this.props.activeOppPokemon].currentHealth}</div>

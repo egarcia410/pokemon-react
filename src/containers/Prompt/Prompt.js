@@ -21,7 +21,7 @@ class Prompt extends Component {
         }
         setTimeout(() => {
             let name = this.props.playerPokemon[this.props.activePlayerPokemon].name;
-            let message = `What will ${name.toUpperCase()} do!`;
+            let message = `What will ${name.toUpperCase()} do?`;
             this.props.updatePromptMessage(message);
         }, 3000);
     };
