@@ -11,12 +11,15 @@ import './Battle.css';
 
 class Battle extends Component {
 
+    // User proofing, won't allow a user to acces battle scene without
+    // first having a pokemon
     componentWillMount() {
         if (this.props.playerPokemon.length === 0) {
             this.props.history.replace('/');
         };
     }
 
+    // Resets battle state after battle is over
     componentWillUnmount() {
         this.props.resetOpponent();
         this.props.resetActivePokemon();

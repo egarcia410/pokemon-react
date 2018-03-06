@@ -14,10 +14,6 @@ class StatusMenu extends Component {
         return percentageDecrease;
     }
 
-    pokemonType = () => {
-
-    }
-
     render() {
         if (this.props.isUser) {
             return (

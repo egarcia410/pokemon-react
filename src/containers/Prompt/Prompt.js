@@ -14,6 +14,7 @@ class Prompt extends Component {
             let message = `A wild ${name.toUpperCase()} appeared!`;
             this.props.updatePromptMessage(message);
         } else {
+            // Battle encounter is a gym battle
             let pokemonName = this.props.oppPokemon[this.props.activeOppPokemon].name;
             let gymLeader = this.props.gymLeaderNames[this.props.activeGymLeader];
             let message = `${gymLeader.toUpperCase()} sent out ${pokemonName.toUpperCase()}!`;
